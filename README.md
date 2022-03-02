@@ -136,6 +136,7 @@ Quelques minutes plus tard, vous recevez un mail de Stéphanie.
 > respecter les standards WCAG.
 >
 > Bon courage et à dispo si besoin :smiley:
+> 
 > Stéphanie
 >
 
