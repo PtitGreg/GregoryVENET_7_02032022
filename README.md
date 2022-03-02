@@ -29,7 +29,7 @@ Stéphanie vous envoie un message via l’outil de messagerie instantanée de
 l’entreprise.
 
 <p align="center">
- <img src="https://user.oc-static.com/upload/2019/11/19/15741782856137_15718405231143_fakechat%20%2810%29.png" width="600px"/>
+ <img src="https://user.oc-static.com/upload/2019/11/19/15741782856137_15718405231143_fakechat%20%2810%29.png" width="800px"/>
 </p>
 <p align="center">La conversation entre Sophie et vous
 </p>
