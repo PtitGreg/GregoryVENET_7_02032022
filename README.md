@@ -137,6 +137,7 @@ Quelques minutes plus tard, vous recevez un mail de Stéphanie.
 >
 > Bon courage et à dispo si besoin :)
 > Stéphanie
+> 
 
 Avec tous ces éléments en tête, vous vous attaquez à la réalisation de ce beau
 projet.
