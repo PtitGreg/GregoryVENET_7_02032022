@@ -140,3 +140,10 @@ Quelques minutes plus tard, vous recevez un mail de Stéphanie.
 
 Avec tous ces éléments en tête, vous vous attaquez à la réalisation de ce beau
 projet.
+
+## Compétences évaluées
+
+* Authentifier un utilisateur et maintenir sa session
+* Personnaliser le contenu envoyé à un client web
+* Gérer un stockage de données à l'aide de SQL
+* Implémenter un stockage de données sécurisé en utilisant SQL
