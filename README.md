@@ -135,9 +135,9 @@ Quelques minutes plus tard, vous recevez un mail de Stéphanie.
 > n'utilise pas le framework Symfony par exemple. Enfin, tes pages devront
 > respecter les standards WCAG.
 >
-> Bon courage et à dispo si besoin :)
+> Bon courage et à dispo si besoin :smiley:
 > Stéphanie
-> 
+>
 
 Avec tous ces éléments en tête, vous vous attaquez à la réalisation de ce beau
 projet.
