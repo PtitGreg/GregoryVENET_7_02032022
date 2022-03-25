@@ -2,6 +2,69 @@
 
 Projet en cours de développement
 
+## Lancement du projet
+
+### Prérequis :
+
+Il vous faut avoir installé sur votre machine :
+
+<ul>
+  <li> Git : https://git-scm.com/downloads</li>
+  <li> Node.js : https://nodejs.org/en/</li>
+  <li> MySql :  https://dev.mysql.com/downloads/installer/</li>
+</ul>
+
+Créer un dossier vide puis cloner ce repository à l'intérieur :
+
+```
+git clone https://github.com/PtitGreg/GregoryVENET_7_02032022.git
+```
+
+## MySQL
+
+Dans le fichier groupomania/backend/.env ,mettre le mot de passe d'accès à votre
+base de donnée et votre nom d'utilisateur si besoin (root par défaut)
+
+```
+DB_USER=root
+DB_PASS=
+```
+
+Ouvrir MySql command Line client puis effectuer ces deux lignes de commandes :
+
+```
+CREATE DATABASE groupomania;
+USE groupomania;
+```
+
+Importer le fichier groupomania.sql (qui ce trouve a la racine du projet) :
+
+```
+source (chemin vers le fichier groupomania.sql);
+```
+
+Attention a indiquer le chemin avec des "/" et non des "\ ".
+
+## BACK END
+
+Ouvrir un terminal dans le dossier backend puis effectuer les lignes de
+commandes suivantes :
+
+```
+npm install
+nodemon
+```
+
+## FRONT END
+
+Ouvrir un autre terminal dans le dossier frontend puis effectuer les lignes de
+commandes suivantes :
+
+```
+npm install
+npm start
+```
+
 ## Scénario
 
 Vous êtes développeur depuis plus d'un an chez **CONNECT-E**, une petite agence
@@ -46,8 +109,11 @@ Quelques minutes plus tard, vous recevez un mail de Stéphanie.
 >
 > Bonjour,
 >
-> Comme convenu, voici les [spécifications fonctionnelles](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P7/Groupomania_Specs_FR_DWJ_VF.pdf). Tu trouveras également
-> les [logos](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P7/Groupomania_Logos+(3).zip) de l’organisation pour l’habillage du site.
+> Comme convenu, voici les
+> [spécifications fonctionnelles](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P7/Groupomania_Specs_FR_DWJ_VF.pdf).
+> Tu trouveras également les
+> [logos](<https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P7/Groupomania_Logos+(3).zip>)
+> de l’organisation pour l’habillage du site.
 >
 > Par ailleurs, Groupomania et moi avons convenu que l’un des employés du groupe
 > testera un MVP du produit, avec une seule des deux fonctionnalités proposées.
@@ -136,16 +202,15 @@ Quelques minutes plus tard, vous recevez un mail de Stéphanie.
 > respecter les standards WCAG.
 >
 > Bon courage et à dispo si besoin :smiley:
-> 
-> Stéphanie
 >
+> Stéphanie
 
 Avec tous ces éléments en tête, vous vous attaquez à la réalisation de ce beau
 projet.
 
 ## Compétences évaluées
 
-* Authentifier un utilisateur et maintenir sa session
-* Personnaliser le contenu envoyé à un client web
-* Gérer un stockage de données à l'aide de SQL
-* Implémenter un stockage de données sécurisé en utilisant SQL
+- Authentifier un utilisateur et maintenir sa session
+- Personnaliser le contenu envoyé à un client web
+- Gérer un stockage de données à l'aide de SQL
+- Implémenter un stockage de données sécurisé en utilisant SQL
