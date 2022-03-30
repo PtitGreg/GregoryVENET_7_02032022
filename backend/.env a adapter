@@ -1,0 +1,4 @@
+A remplir sans les guillemets et renommer le titre en ".env"
+
+PORT = ""
+TOKEN_KEY = ""
