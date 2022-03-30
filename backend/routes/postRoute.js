@@ -8,7 +8,7 @@ router.post("/", upload.single("file"), postCtrl.createPost);
 router.put("/:id", postCtrl.updatePost);
 router.delete("/:id", postCtrl.deletePost);
 router.patch("/like-post/:id", postCtrl.likePost);
-router.patch("/unlike-post/:id", postCtrl.lovePost);
+router.patch("/unlike-post/:id", postCtrl.unlikePost);
 
 router.patch("/comment-post/:id", postCtrl.commentPost);
 router.patch("/edit-comment-post/:id", postCtrl.editCommentPost);

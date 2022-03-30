@@ -4,7 +4,7 @@ Projet en cours de développement
 
 ## Lancement du projet
 
-### Prérequis :
+### Prérequis
 
 Il vous faut avoir installé sur votre machine :
 
