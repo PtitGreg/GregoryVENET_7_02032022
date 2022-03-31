@@ -2,4 +2,4 @@
 /config/dbConfig.js
 /images/*
 .env
-../.vscode
+/.vscode
