@@ -2,55 +2,84 @@ const db = require("../models");
 const userModel = db.userModel;
 const Op = db.Sequelize.Op;
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const passwordValidator = require("password-validator");
 
-exports.signup = async (req, res) => {
-	    const { username, email, password } = req.body
-    try{
-        const user = await userModel.create({username, email, password});
-        return res.json(user);
-    }catch(err){
-        return res.status(500).json(err);
-    }
+//Schema password
+const schemaPassword = new passwordValidator();
+schemaPassword
+	.is().min(8)
+	.is().max(100)
+	.has().uppercase()
+	.has().lowercase()
+	.has().not()
+	.spaces()
+	.has().digits(2);
+
+
+exports.signup = (req, res) => {
+	if (schemaPassword.validate(req.body.password)) {
+		bcrypt.hash(req.body.password, 10).then((hash) => {
+			const user = {
+				firstName: req.body.firstName,
+				lastName: req.body.lastName,
+				email: req.body.email,
+				password: hash,
+				avatar: ("../images/avatar.webp"),
+			};
+			userModel.create(user)
+				.then(() => res.status(201).json({ message: "Utilisateur créé !" }))
+				.catch((err) => {
+					res.status(500).json({
+						message: err.message
+					});
+				});
+		})
+	} else {
+		res.status(401).json({
+			message:
+				"Le mot de passe doit contenir 8 caractères, 1 majuscule, 1 minuscule et 2 chiffres minimum!",
+		});
+	}
 };
 exports.login = (req, res) => {
-	exports.login = (req, res) => {
-		userModel.findOne({ email: req.body.email })
-			.then((user) => {
-				if (!user) {
-					return res.status(401).json({ error });
-				}
+	userModel
+		.findOne({ where: { email: req.body.email } })
+		.then((user) => {
+			if (!user) {
+				return res.status(401).json({ error: "identifiant non valide ou inéxistant" });
+			} else {
 				bcrypt
 					.compare(req.body.password, user.password)
 					.then((valid) => {
 						if (!valid) {
-							return res.status(401).json({ error });
+							return res.status(401).json({ error: "password non valide" });
 						}
 						res.status(200).json({
-							userId: user._id,
-							token: jwt.sign({ userId: user._id }, process.env.TOKEN_KEY, {
+							id: user.id,
+							username: user.username,
+							token: jwt.sign({ userId: user.id }, process.env.TOKEN_KEY, {
 								expiresIn: "24h",
 							}),
 							message: "Utilisateur connecté avec succès !",
 						});
 					})
 					.catch((error) => res.status(500).json({ error }));
-			})
-			.catch((error) => res.status(500).json({ error }));
-	};
-
+			}
+		})
+		.catch((error) => res.status(500).json({ error }));
 };
-exports.logout = (req, res) => {
-
-};
-exports.getAllUsers = (req, res, next) => {
-	userModel.findAll({ attributes: ["id", "username", "email"] })
+exports.getAllUsers = async (req, res, next) => {
+	await userModel
+		.findAll({ attributes: ["id", "firstName", "lastName","email", "avatar"] })
 		.then((users) => res.status(200).json(users))
 		.catch((error) => res.status(400).json(error));
 };
 
-module.exports.findOne = async (req, res) => {
+exports.findOneUser = async (req, res) => {
 	const id = req.params.id;
-	await userModel.findByPk(id)
+	await userModel
+		.findByPk(id)
 		.then((data) => {
 			if (data) {
 				res.send(data);
@@ -68,40 +97,23 @@ module.exports.findOne = async (req, res) => {
 		});
 };
 
-exports.roleUser = (req, res) => {};
-
 exports.updateUser = async (req, res) => {
 	const id = req.params.id;
-	await userModel.update(req.body, {
-		where: { id },
-	})
-		.then((num) => {
-			if (num == 1) {
-				res.send({
-					message: "Utilisateur mis à jour avec succès !",
-				});
-			} else {
-				res.send({
-					message: `Impossible de mettre à jour l'utilisateur avec l'id=${id} !`,
-				});
-			}
-		})
-		.catch((err) => {
-			res.status(500).send({
-				message: "Erreur mise à jour utilisateur à l'id=" + id,
-			});
-		});
+	// req.file ? userModel
 };
 
 exports.deleteUser = async (req, res) => {
-	const id = req.params.id;
-	try {
-		const user = await userModel.findOne({
-			where: { id },
-		});
-		await user.destroy();
-		return res.json({ message: "Utilisateur supprimé !" });
-	} catch (err) {
-		return res.status(500).json({ err: "Erreur lors de la suppression !" });
-	}
-};
+	userModel.findOne({
+		where: { id: req.params.id }
+	})
+		.then((user) => {
+				const filename = user.avatar.split("../images/")[1]
+				if (!filename === "avatar.webp") {
+					fs.unlink(`../images/${filename}`, () => {})
+				}
+				userModel.destroy({where: {id: user.id}})
+					.then(() => res.status(200).send("Utilisateur supprimé"))
+					.catch((error) => res.status(500).send({error}))
+		})
+		.catch((error) => res.status(500).send({error}))
+}

@@ -1,18 +1,12 @@
 const router = require("express").Router();
-// const auth = require("../middlewares/authMiddleware");
 const userCtrl = require("../controllers/userController");
-// const multer = require("multer");
+const multer = require("../middlewares/multerMiddleware");
 
-router.post("/signup", userCtrl.signup);
+router.post("/signup", multer, userCtrl.signup);
 router.post("/login", userCtrl.login);
-router.get("/logout", userCtrl.logout);
 router.get("/", userCtrl.getAllUsers);
-router.get("/:id", userCtrl.findOne);
-router.get("/role", userCtrl.roleUser);
-router.put("/:id", userCtrl.updateUser);
-router.delete("/:id", userCtrl.deleteUser);
-// router.get("/messages/", userCtrl.getAllMessageAdmin);
-// router.get("/users/", userCtrl.getAllUsersAdmin);
-
+router.get("/:id", userCtrl.findOneUser);
+router.put("/:id", multer, userCtrl.updateUser);
+router.delete("/:id", multer, userCtrl.deleteUser);
 
 module.exports = router;

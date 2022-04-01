@@ -20,15 +20,15 @@ Créer un dossier vide puis cloner ce repository à l'intérieur :
 git clone https://github.com/PtitGreg/GregoryVENET_7_02032022.git
 ```
 
-## MySQL
+## .env
 
-Dans le fichier groupomania/backend/.env ,mettre le mot de passe d'accès à votre
-base de donnée et votre nom d'utilisateur si besoin (root par défaut)
+Dans le fichier /backend/.env_a_adapter ,mettre les éléments demandés entre guillemets dans le fichier et le renommer en ".env"
 
 ```
-DB_USER=root
-DB_PASS=
+PORT = ""
+TOKEN_KEY = ""
 ```
+
 
 Ouvrir MySql command Line client puis effectuer ces deux lignes de commandes :
 
@@ -37,13 +37,6 @@ CREATE DATABASE groupomania;
 USE groupomania;
 ```
 
-Importer le fichier groupomania.sql (qui ce trouve a la racine du projet) :
-
-```
-source (chemin vers le fichier groupomania.sql);
-```
-
-Attention a indiquer le chemin avec des "/" et non des "\ ".
 
 ## BACK END
 
@@ -52,7 +45,7 @@ commandes suivantes :
 
 ```
 npm install
-nodemon
+npm start
 ```
 
 ## FRONT END

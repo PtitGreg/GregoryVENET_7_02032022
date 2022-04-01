@@ -13,10 +13,10 @@ const cookieParser = require("cookie-parser");
 
 const helmet = require("helmet");
 
-
 // db.sequelize.sync();
-// db.sequelize.sync({ force: true }).then(() => {
-// 	console.log("Drop and re-sync db.");
+// db.sequelize.sync({ force: true })
+// 	.then(() => {
+// 		console.log("Database Groupomania effacées et resynchronisées !")
 // });
 
 app.use(express.json())
@@ -38,10 +38,9 @@ app.use((req, res, next) => {
 	next();
 });
 
-
 app.use("/user", userRoutes);
 app.use("/post", postRoutes);
 
-app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("images", express.static("images"));
 
 module.exports = app;

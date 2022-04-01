@@ -14,16 +14,7 @@ module.exports.readPost = (req, res) => {
 };
 
 module.exports.createPost = async (req, res) => {
-	const { content, userId } = req.body;
-	try {
-		const user = await postModel.findOne({
-			where: { id: userId },
-		});
-		const post = await Post.create({ content, userId: user.id });
-		return res.json(post);
-	} catch (err) {
-		return res.status(500).json(err);
-	}
+
 };
 
 module.exports.updatePost = (req, res) => {
