@@ -1,9 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
-	const User = sequelize.define(
-		"User",
+	const Users = sequelize.define(
+		"Users",
 		{
+			id: {
+				autoIncrement: true,
+				type: DataTypes.INTEGER,
+				allowNull: false,
+				primaryKey: true,
+			},
 			email: {
-				type: DataTypes.STRING,
+				type: DataTypes.STRING(50),
 				unique: true,
 				allowNull: false,
 				validate: {
@@ -12,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
 				},
 			},
 			firstName: {
-				type: DataTypes.STRING,
+				type: DataTypes.STRING(20),
 				allowNull: false,
 				validate: {
 					isAlpha: {
@@ -23,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
 				},
 			},
 			lastName: {
-				type: DataTypes.STRING,
+				type: DataTypes.STRING(20),
 				allowNull: false,
 				validate: {
 					isAlpha: {
@@ -43,10 +49,10 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			bio: {
 				type: DataTypes.TEXT,
-				// validate: {
-				// 	len: [5, 200],
-				// 	is: /^[a-z]+$/i,
-				// },
+				validate: {
+					len: [5, 200],
+					is: /^[a-zA-Z0-9]+$/i,
+				},
 			},
 			isAdmin: {
 				type: DataTypes.BOOLEAN,
@@ -54,13 +60,16 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
+			tableName: "Users",
+		},
+		{
 			classMethods: {
 				associate: function (models) {
 					// associations can be defined here
-					models.User.hasMany(models.Message);
+					models.Users.hasMany(models.Messages);
 				},
 			},
 		},
 	);
-	return User;
+	return Users;
 };

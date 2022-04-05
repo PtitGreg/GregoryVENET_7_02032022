@@ -14,10 +14,10 @@ const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
 
 // db.sequelize.sync();
-// db.sequelize.sync({ force: true })
-// 	.then(() => {
-// 		console.log("Database Groupomania effacées et resynchronisées !")
-// });
+db.sequelize.sync({ force: false })
+	.then(() => {
+		console.log("Database Groupomania effacée et resynchronisée !")
+});
 
 app.use(express.json())
 

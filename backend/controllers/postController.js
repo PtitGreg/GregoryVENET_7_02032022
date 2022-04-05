@@ -1,46 +1,69 @@
-const router = require('express').Router()
-const db = require('../config/dbConfig')
-const postModel = require('../models/postModel')
+const db = require('../models')
+const postModel = db.postModel
+const fs = require('fs')
 
-module.exports.readPost = (req, res) => {
-	postModel.find((err, docs)
-		.then((results) => {
-			res.status(200).send(results).sort({ createdAt: -1})
+exports.readAllPost = async (req, res) => {
+	await postModel
+		.findAll({
+			attributes: ["title", "content", "attachment", "like", "unlike"],
+			order: [["createdAt", "DESC"]],
 		})
-		.catch((err) => {
-			res.status(500).send("Erreur chargement des données: ", err)
-		})
-	)
+		.then((posts) => res.status(200).json(posts))
+		.catch((error) => res.status(400).json(error));
 };
 
-module.exports.createPost = async (req, res) => {
+exports.createPost = async (req, res) => {
+	console.log('req: ', req.body);
+	// const imageUrl = "";
+	// if (req.file) {
+	// 	imageUrl = `${req.protocol}://${req.get("host")}/images/${
+	// 		req.file.filename
+	// 	}`;
+	// }
+	// const post = {
+	// 	title: req.body.title,
+	// 	content: req.body.content,
+	// 	media: imageUrl,
+	// 	like: 0,
+	// 	unlike: 0,
+	// };
+	// await postModel
+	// 	.create(post)
+	// 	.then((post) => res.status(201).json({ message: "Post créé !", post }))
+	// 	.catch((err) => {
+	// 		res.status(500).json({
+	// 			message: err.message,
+	// 		});
+	// 	});
+};
+
+exports.updatePost = (req, res) => {
 
 };
 
-module.exports.updatePost = (req, res) => {
+exports.deletePost = (req, res) => {
 
 };
 
-module.exports.deletePost = (req, res) => {
+exports.likePost = async (req, res) => {
 
 };
 
-module.exports.likePost = async (req, res) => {
+exports.unlikePost = async (req, res) => {
 
 };
 
-module.exports.unlikePost = async (req, res) => {
+exports.readAllCommentsPost = async (req, res) => {
+
+}
+exports.createCommentPost = (req, res) => {
 
 };
 
-module.exports.commentPost = (req, res) => {
+exports.editCommentPost = (req, res) => {
 
 };
 
-module.exports.editCommentPost = (req, res) => {
-
-};
-
-module.exports.deleteCommentPost = (req, res) => {
+exports.deleteCommentPost = (req, res) => {
 
 };
