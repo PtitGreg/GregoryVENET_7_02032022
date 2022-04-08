@@ -1,5 +1,5 @@
 const db = require("../models");
-const userModel = db.userModel;
+const userModel = db.user;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const passwordValidator = require("password-validator");
@@ -21,19 +21,19 @@ schemaPassword
 	.spaces()
 	.has()
 	.digits(2);
-
 exports.signup = (req, res) => {
 	if (schemaPassword.validate(req.body.password)) {
 		bcrypt.hash(req.body.password, 10).then((hash) => {
-			const user = {
+			const reqBody = {
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
 				email: req.body.email,
 				password: hash,
-				avatar: `${req.protocol}://${req.get("host")}/images/avatar.webp`,
+				isAdmin: req.body.isAdmin,
+				media: `${req.protocol}://${req.get("host")}/images/avatar.webp`,
 			};
 			userModel
-				.create(user)
+				.create(reqBody)
 				.then(() => res.status(201).json({ message: "Utilisateur créé !" }))
 				.catch((err) => {
 					res.status(500).json({
@@ -79,87 +79,91 @@ exports.login = async (req, res) => {
 };
 exports.getAllUsers = async (req, res, next) => {
 	await userModel
-		.findAll({ attributes: ["id", "firstName", "lastName", "email", "avatar"] })
+		.findAll({ attributes: ["id", "firstName", "lastName", "email", "media"] })
 		.then((users) => res.status(200).json(users))
 		.catch((error) => res.status(400).json(error));
 };
 
-exports.findOneUser = async (req, res) => {
-	const id = req.params.id;
+exports.getOneUser = async (req, res) => {
 	await userModel
-		.findByPk(id)
+		.findOne({where: {id : req.params.id}})
 		.then((data) => {
 			if (data) {
-				res.send(data);
+				res.status(200).json(data);
 			} else {
-				res.status(404).send({
-					message: `Ne peut pas trouver l'utilisateur avec l'id= ` + id,
+				res.status(404).json({
+					message: `Utilisateur introuvable !`,
 				});
 			}
 		})
 		.catch((err) => {
-			res.status(500).send({
+			res.status(500).json({
 				message:
-					"erreur lors de la récupération de l'utilisateur avec l'id=" + id,
+					"erreur lors de la récupération de l'utilisateur !", err,
 			});
 		});
 };
 
 exports.updateUser = async (req, res) => {
-	userModel.findOne({ where: { id: req.params.id } })
+	await userModel
+		.findOne({ where: { id: req.params.id } })
 		.then((user) => {
-			if (
-				user.avatar !==
-					`${req.protocol}://${req.get("host")}/images/${req.file.filename}` &&
-				user.avatar !== "http://localhost:5000/images/avatar.webp"
-			) {
-				let img = user.avatar.split("/images/")[1];
-				fs.unlink("images/" + img, () => {
-					userModel.update(
-						{
-							avatar:
-								req.protocol +
-								"://" +
-								req.get("host") +
-								"/images/" +
-								req.file.filename,
-						},
-						{ where: { id: req.params.id } },
-					)
-						.then(() => {
-							res.status(201).json({
-								avatar: `${req.protocol}://${req.get("host")}/images/${
-									req.file.filename
-								}`,
-								message: "Votre photo de profil à bien été modifiée",
-							});
-						})
-						.catch((error) => res.status(404).json({ error }));
-				});
-			} else {
-				userModel.update(
+			let dataBody = {
+				...req.body,
+			};
+			if (req.file) {
+				const img = user.media.split("/images/")[1];
+				if (img !== "avatar.webp") {
+					fs.unlinkSync("images/" + img, () => {});
+				}
+				dataBody = {
+					...dataBody,
+					media: `${req.protocol}://${req.get("host")}/images/${
+						req.file.filename
+					}`,
+				};
+			}
+			userModel
+				.update(
 					{
-						avatar:
-							req.protocol +
-							"://" +
-							req.get("host") +
-							"/images/" +
-							req.file.filename,
+						...dataBody,
 					},
-					{ where: { id: req.params.id } },
+					{
+						where: { id: req.params.id },
+					},
 				)
-					.then(() => {
-						res.status(201).json({
-							avatar: `${req.protocol}://${req.get("host")}/images/${
-								req.file.filename
-							}`,
-							message: "Votre photo de profil à bien été modifiée",
+				.then(() =>
+					res
+						.status(201)
+						.json({ message: "Utilisateur modifié avec succès !" }),
+				)
+				.catch((err) => {
+					res.status(500).json({
+						message: err.message,
+					});
+				});
+		})
+		.then(() => {
+			if (req.body.password && schemaPassword.validate(req.body.password)) {
+				bcrypt.hash(req.body.password, 10).then((hash) => {
+					userModel
+						.update(
+							{
+								password: hash,
+							},
+							{
+								where: { id: req.params.id },
+							},
+						)
+						.catch((err) => {
+							res.status(500).json({
+								message: err.message,
+							});
 						});
-					})
-					.catch((error) => res.status(404).json({ error }));
+				});
 			}
 		})
-		.catch((error) => res.status(500).json(error));
+		.catch((error) => res.status(500).json("Utilisateur non trouvé !",error));
 };
 exports.deleteUser = async (req, res) => {
 	await userModel
@@ -167,30 +171,20 @@ exports.deleteUser = async (req, res) => {
 			where: { id: req.params.id },
 		})
 		.then((user) => {
-			if (user.avatar !== "http://localhost:5000/images/avatar.webp") {
-				const filename = user.avatar.split("/images/")[1];
-				fs.unlink(`images/${filename}`, () => {
-					userModel.destroy({ where: { id: req.params.id } })
-						.then(() => {
-							res
-								.status(200)
-								.json({
-									message: "Votre compte utilisateur à bien été supprimé.",
-								});
-						})
-						.catch((error) => res.status(404).json({ error }));
-				});
-			} else {
-				userModel.destroy({ where: { id: req.params.id } })
-					.then(() =>
-						res
-							.status(200)
-							.json({
-								message: "Votre compte utilisateur à bien été supprimé.",
-							}),
-					)
-					.catch((error) => res.status(404).json({ error }));
+			if (
+				user.media !== `${req.protocol}://${req.get("host")}/images/avatar.webp`
+			) {
+				const filename = user.media.split("/images/")[1];
+				fs.unlink(`images/${filename}`, () => {});
 			}
+			userModel
+				.destroy({ where: { id: req.params.id } })
+				.then(() => {
+					res.status(200).json({
+						message: "Votre compte utilisateur à été supprimé avec succès !",
+					});
+				})
+				.catch((error) => res.status(404).json({message: "Erreur lors de la suppression dans la database !", error }));
 		})
-		.catch((error) => res.status(500).send({ error }));
+		.catch((error) => res.status(500).json({message:"Utilisateur non trouvé !", error}));
 };

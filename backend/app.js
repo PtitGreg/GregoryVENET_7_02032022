@@ -1,29 +1,23 @@
+// Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
+
 const express = require("express");
 const path = require("path");
-
 const app = express();
+const db = require("./models");
 
 const userRoutes = require("./routes/userRoute");
 const postRoutes = require("./routes/postRoute");
-const db = require("./models");
+const commentRoutes = require("./routes/commentRoute");
 
 require("dotenv").config("./.env");
-
-const cookieParser = require("cookie-parser");
-
 const helmet = require("helmet");
 
-// db.sequelize.sync();
-db.sequelize.sync({ force: false })
-	.then(() => {
-		console.log("Database Groupomania effacée et resynchronisée !")
-});
+// db.sequelize.sync({ force: true }).then(() => {
+// 	console.log("Database Groupomania effacée et resynchronisée !");
+// });
 
 app.use(express.json())
 
-app.use(cookieParser());
-
-app.use(helmet());
 
 app.use((req, res, next) => {
 	res.setHeader("Access-Control-Allow-Origin", "*");
@@ -38,9 +32,16 @@ app.use((req, res, next) => {
 	next();
 });
 
+app.use(
+	helmet({
+		crossOriginResourcePolicy: false,
+	}),
+);
+app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/user", userRoutes);
 app.use("/post", postRoutes);
+// app.use("/comment", commentRoutes);
 
-app.use("/images", express.static(path.join(__dirname, "images")));
+
 
 module.exports = app;

@@ -1,3 +1,5 @@
+// Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
+
 const jwt = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
@@ -9,7 +11,8 @@ module.exports = (req, res, next) => {
 		} else {
 			next();
 		}
-	} catch (error) {
-		res.status(401).json({ error });
+	}
+	catch (error) {
+		res.status(401).json({ message: " erreur authentification !",error });
 	}
 };
