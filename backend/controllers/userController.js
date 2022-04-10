@@ -1,3 +1,5 @@
+// Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
+
 const db = require("../models");
 const userModel = db.user;
 const jwt = require("jsonwebtoken");
@@ -21,16 +23,23 @@ schemaPassword
 	.spaces()
 	.has()
 	.digits(2);
-exports.signup = (req, res) => {
+
+exports.signup = async (req, res) => {
+	let admin = "";
+	let media = `${req.protocol}://${req.get("host")}/images/default/avatar.webp`;
 	if (schemaPassword.validate(req.body.password)) {
+		if (req.body.email === "admin@groupomania.com") {
+			admin = true;
+			media = `${req.protocol}://${req.get("host")}/images/default/admin.jpg`;
+		}
 		bcrypt.hash(req.body.password, 10).then((hash) => {
 			const reqBody = {
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
 				email: req.body.email,
 				password: hash,
-				isAdmin: req.body.isAdmin,
-				media: `${req.protocol}://${req.get("host")}/images/avatar.webp`,
+				isAdmin: admin,
+				media,
 			};
 			userModel
 				.create(reqBody)
@@ -66,9 +75,16 @@ exports.login = async (req, res) => {
 						res.status(200).json({
 							id: user.id,
 							username: user.username,
-							token: jwt.sign({ userId: user.id }, process.env.TOKEN_KEY, {
-								expiresIn: "24h",
-							}),
+							token: jwt.sign(
+								{
+									userId: user.id,
+									isAdmin: user.isAdmin,
+								},
+								process.env.TOKEN_KEY,
+								{
+									expiresIn: "24h",
+								},
+							),
 							message: "Utilisateur connecté avec succès !",
 						});
 					})
@@ -79,14 +95,14 @@ exports.login = async (req, res) => {
 };
 exports.getAllUsers = async (req, res, next) => {
 	await userModel
-		.findAll({ attributes: ["id", "firstName", "lastName", "email", "media"] })
+		.findAll()
 		.then((users) => res.status(200).json(users))
 		.catch((error) => res.status(400).json(error));
 };
 
 exports.getOneUser = async (req, res) => {
 	await userModel
-		.findOne({where: {id : req.params.id}})
+		.findOne({ where: { id: req.params.id } })
 		.then((data) => {
 			if (data) {
 				res.status(200).json(data);
@@ -98,8 +114,8 @@ exports.getOneUser = async (req, res) => {
 		})
 		.catch((err) => {
 			res.status(500).json({
-				message:
-					"erreur lors de la récupération de l'utilisateur !", err,
+				message: "erreur lors de la récupération de l'utilisateur !",
+				err,
 			});
 		});
 };
@@ -113,9 +129,7 @@ exports.updateUser = async (req, res) => {
 			};
 			if (req.file) {
 				const img = user.media.split("/images/")[1];
-				if (img !== "avatar.webp") {
-					fs.unlinkSync("images/" + img, () => {});
-				}
+				fs.unlink("images/" + img, () => {});
 				dataBody = {
 					...dataBody,
 					media: `${req.protocol}://${req.get("host")}/images/${
@@ -163,7 +177,7 @@ exports.updateUser = async (req, res) => {
 				});
 			}
 		})
-		.catch((error) => res.status(500).json("Utilisateur non trouvé !",error));
+		.catch((error) => res.status(500).json("Utilisateur non trouvé !", error));
 };
 exports.deleteUser = async (req, res) => {
 	await userModel
@@ -172,7 +186,8 @@ exports.deleteUser = async (req, res) => {
 		})
 		.then((user) => {
 			if (
-				user.media !== `${req.protocol}://${req.get("host")}/images/avatar.webp`
+				user.media !==
+				`${req.protocol}://${req.get("host")}/images/default/avatar.webp`
 			) {
 				const filename = user.media.split("/images/")[1];
 				fs.unlink(`images/${filename}`, () => {});
@@ -181,10 +196,33 @@ exports.deleteUser = async (req, res) => {
 				.destroy({ where: { id: req.params.id } })
 				.then(() => {
 					res.status(200).json({
-						message: "Votre compte utilisateur à été supprimé avec succès !",
+						message: "Utilisateur supprimé avec succès !",
 					});
 				})
-				.catch((error) => res.status(404).json({message: "Erreur lors de la suppression dans la database !", error }));
+				.catch((error) =>
+					res.status(404).json({
+						message: "Erreur lors de la suppression dans la database !",
+						error,
+					}),
+				);
 		})
-		.catch((error) => res.status(500).json({message:"Utilisateur non trouvé !", error}));
+		.catch((error) =>
+			res.status(500).json({ message: "Utilisateur non trouvé !", error }),
+		);
+};
+
+exports.adminDeleteUser = async (req, res) => {
+	userModel
+		.destroy({ where: { id: req.params.id } })
+		.then(() => {
+			res.status(200).json({
+				message: "Post supprimé avec succès !",
+			});
+		})
+		.catch((error) =>
+			res.status(404).json({
+				message: "Erreur lors de la suppression dans la database !",
+				error,
+			}),
+		);
 };

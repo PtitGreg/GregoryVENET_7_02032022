@@ -2,15 +2,18 @@
 
 const router = require("express").Router();
 const userCtrl = require("../controllers/userController");
-const auth = require("../middlewares/authMiddleware");
 const multer = require("../middlewares/multerMiddleware");
+const authUser = require("../middlewares/authUserMiddleware");
+const authAdmin = require("../middlewares/authAdminMiddleware");
 const isOwner = require("../middlewares/isOwnerMiddleware");
 
 router.post("/signup", userCtrl.signup);
 router.post("/login", userCtrl.login);
-router.get("/", auth, userCtrl.getAllUsers);
-router.get("/:id", auth, userCtrl.getOneUser);
-router.put("/:id", auth, isOwner, multer, userCtrl.updateUser);
-router.delete("/:id", auth, isOwner, multer, userCtrl.deleteUser);
+router.get("/", authUser, userCtrl.getAllUsers);
+router.get("/:id", authUser, userCtrl.getOneUser);
+router.put("/:id", authUser, isOwner, multer, userCtrl.updateUser);
+router.delete("/:id", authUser, isOwner, multer, userCtrl.deleteUser);
+
+router.delete("/admin/:id", authAdmin, multer, userCtrl.adminDeleteUser);
 
 module.exports = router;

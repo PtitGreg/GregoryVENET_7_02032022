@@ -12,7 +12,7 @@ const commentRoutes = require("./routes/commentRoute");
 require("dotenv").config("./.env");
 const helmet = require("helmet");
 
-// db.sequelize.sync({ force: true }).then(() => {
+// db.sequelize.sync({ force: false }).then(() => {
 // 	console.log("Database Groupomania effacée et resynchronisée !");
 // });
 
@@ -40,7 +40,7 @@ app.use(
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/user", userRoutes);
 app.use("/post", postRoutes);
-// app.use("/comment", commentRoutes);
+app.use("/comment", commentRoutes);
 
 
 

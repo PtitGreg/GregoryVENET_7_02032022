@@ -19,7 +19,6 @@ exports.createPost = async (req, res) => {
 	if (req.file) {
 		reqBody = {
 			...reqBody,
-			userId: req.body.userId,
 			media: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
 		};
 	}
@@ -41,7 +40,6 @@ exports.updatePost = async (req, res) => {
 		};
 		if (req.file) {
 			const img = post.media.split("/images/")[1];
-			console.log("img: ", img);
 			if (img) {
 				fs.unlinkSync("images/" + img, () => {});
 			}
@@ -73,6 +71,52 @@ exports.updatePost = async (req, res) => {
 		.catch((error) => res.status(500).json("Post non trouvé !",error));
 };
 
-exports.deletePost = async (req, res) => {};
+exports.deletePost = async (req, res) => {
+	await postModel
+		.findOne({
+			where: { id: req.params.id },
+		})
+		.then((post) => {
+			if (
+				post.media !==
+				`${req.protocol}://${req.get("host")}/images/default/avatar.webp`
+			) {
+				const filename = post.media.split("/images/")[1];
+				fs.unlinkSync(`images/${filename}`, () => {});
+			}
+			postModel
+				.destroy({ where: { id: req.params.id } })
+				.then(() => {
+					res.status(200).json({
+						message: "Post supprimé avec succès !",
+					});
+				})
+				.catch((error) =>
+					res.status(404).json({
+						message: "Erreur lors de la suppression dans la database !",
+						error,
+					}),
+				);
+		})
+		.catch((error) =>
+			res.status(500).json({ message: "Post non trouvé !", error }),
+		);
+};
 
-exports.likePost = async (req, res) => {};
+exports.adminDeletePost = async (req, res) => {
+	postModel
+		.destroy({ where: { id: req.params.id } })
+		.then(() => {
+			res.status(200).json({
+				message: "Post supprimé avec succès !",
+			});
+		})
+		.catch((error) =>
+			res.status(404).json({
+				message: "Erreur lors de la suppression dans la database !",
+				error,
+			}),
+		);
+};
+
+// exports.likePost = async (req, res) => {};

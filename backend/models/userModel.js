@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
 	const Users = sequelize.define("Users", {
 		email: {
 			type: DataTypes.STRING(50),
-			unique: true,
+			unique: {msg: "Utilisateur déjà présent !"},
 			allowNull: false,
 			validate: {
 				isEmail: { msg: "L'email doit être valide !" },
