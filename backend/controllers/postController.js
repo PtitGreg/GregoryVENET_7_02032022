@@ -33,42 +33,47 @@ exports.createPost = async (req, res) => {
 };
 
 exports.updatePost = async (req, res) => {
-	await postModel.findOne({ where: { id: req.params.id } })
+	await postModel
+		.findOne({ where: { id: req.params.id } })
 		.then((post) => {
-		let dataBody = {
-			...req.body,
-		};
-		if (req.file) {
-			const img = post.media.split("/images/")[1];
-			if (img) {
-				fs.unlinkSync("images/" + img, () => {});
-			}
-			dataBody = {
-				...dataBody,
-				media: `${req.protocol}://${req.get("host")}/images/${
-					req.file.filename
-				}`,
+			let dataBody = {
+				...req.body,
 			};
-		}
-		postModel
-			.update(
-				{
+			if (req.file) {
+				if (post.media) {
+					const img = post.media.split("/images/")[1];
+					fs.unlink("images/" + img, () => {});
+				}
+				dataBody = {
 					...dataBody,
-				},
-				{
-					where: { id: req.params.id },
-				},
-			)
-			.then(() =>
-				res.status(201).json({ message: "Utilisateur modifié avec succès !" }),
-			)
-			.catch((err) => {
-				res.status(500).json({
-					message: err.message,
+					media: `${req.protocol}://${req.get("host")}/images/${
+						req.file.filename
+					}`,
+				};
+			}
+			postModel
+				.update(
+					{
+						...dataBody,
+					},
+					{
+						where: { id: req.params.id },
+					},
+				)
+				.then(() =>
+					res
+						.status(201)
+						.json({ message: "Post modifié avec succès !" }),
+				)
+				.catch((err) => {
+					res.status(500).json({
+						message: err.message,
+					});
 				});
-			});
 		})
-		.catch((error) => res.status(500).json("Post non trouvé !",error));
+		.catch((error) =>
+			res.status(500).json({ message: "Post non trouvé !", error }),
+		);
 };
 
 exports.deletePost = async (req, res) => {
@@ -77,12 +82,9 @@ exports.deletePost = async (req, res) => {
 			where: { id: req.params.id },
 		})
 		.then((post) => {
-			if (
-				post.media !==
-				`${req.protocol}://${req.get("host")}/images/default/avatar.webp`
-			) {
+			if (post.media) {
 				const filename = post.media.split("/images/")[1];
-				fs.unlinkSync(`images/${filename}`, () => {});
+				fs.unlink(`images/${filename}`, () => {});
 			}
 			postModel
 				.destroy({ where: { id: req.params.id } })
@@ -104,18 +106,31 @@ exports.deletePost = async (req, res) => {
 };
 
 exports.adminDeletePost = async (req, res) => {
-	postModel
-		.destroy({ where: { id: req.params.id } })
-		.then(() => {
-			res.status(200).json({
-				message: "Post supprimé avec succès !",
-			});
+	await postModel
+		.findOne({
+			where: { id: req.params.id },
+		})
+		.then((post) => {
+			if (post.media) {
+				const filename = post.media.split("/images/")[1];
+				fs.unlink(`images/${filename}`, () => {});
+			}
+			postModel
+				.destroy({ where: { id: req.params.id } })
+				.then(() => {
+					res.status(200).json({
+						message: "Post supprimé avec succès !",
+					});
+				})
+				.catch((error) =>
+					res.status(404).json({
+						message: "Erreur lors de la suppression dans la database !",
+						error,
+					}),
+				);
 		})
 		.catch((error) =>
-			res.status(404).json({
-				message: "Erreur lors de la suppression dans la database !",
-				error,
-			}),
+			res.status(500).json({ message: "Post non trouvé !", error }),
 		);
 };
 

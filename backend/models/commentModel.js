@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
 		media: {
 			type: DataTypes.STRING(200),
 		},
+		
 	});
 	return Comments;
 };

@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
 	try {
 		const token = req.headers.authorization.split(" ")[1];
 		req.token = jwt.verify(token, process.env.TOKEN_KEY);
-		if (isAdmin !== true) {
+		if (!req.token.isAdmin) {
 			throw "Vous n'avez pas les droits requis !";
 		} else {
 			next();

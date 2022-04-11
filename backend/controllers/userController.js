@@ -212,17 +212,33 @@ exports.deleteUser = async (req, res) => {
 };
 
 exports.adminDeleteUser = async (req, res) => {
-	userModel
-		.destroy({ where: { id: req.params.id } })
-		.then(() => {
-			res.status(200).json({
-				message: "Post supprimé avec succès !",
-			});
+	await userModel
+		.findOne({
+			where: { id: req.params.id },
+		})
+		.then((user) => {
+			if (
+				user.media !==
+				`${req.protocol}://${req.get("host")}/images/default/avatar.webp`
+			) {
+				const filename = user.media.split("/images/")[1];
+				fs.unlink(`images/${filename}`, () => {});
+			}
+			userModel
+				.destroy({ where: { id: req.params.id } })
+				.then(() => {
+					res.status(200).json({
+						message: "Utilisateur supprimé avec succès !",
+					});
+				})
+				.catch((error) =>
+					res.status(404).json({
+						message: "Erreur lors de la suppression dans la database !",
+						error,
+					}),
+				);
 		})
 		.catch((error) =>
-			res.status(404).json({
-				message: "Erreur lors de la suppression dans la database !",
-				error,
-			}),
+			res.status(500).json({ message: "Utilisateur non trouvé !", error }),
 		);
 };

@@ -16,7 +16,6 @@ exports.getAllComments = async (req, res) => {
 
 exports.createComment = async (req, res) => {
 	let reqBody = req.body;
-	console.log('reqBody: ', reqBody);
 	if (req.file) {
 		reqBody = {
 			...reqBody,
@@ -41,9 +40,10 @@ exports.updateComment = async (req, res) => {
 				...req.body,
 			};
 			if (req.file) {
-				const img = comment.media.split("/images/")[1];
-				if (img) {
-					fs.unlinkSync("images/" + img, () => {});
+				if (comment.media) {
+					console.log('comment.media: ', comment.media);
+					const img = comment.media.split("/images/")[1];
+					fs.unlink("images/" + img, () => {});
 				}
 				dataBody = {
 					...dataBody,
@@ -72,23 +72,22 @@ exports.updateComment = async (req, res) => {
 					});
 				});
 		})
-		.catch((error) => res.status(500).json("Commentaire non trouvé !", error));
+		// .catch((error) =>
+		// 	res.status(500).json({ message: "Commentaire non trouvé !", error }),
+		// );
 };
 
-exports.deleteComment = async (req, res) => {
-	await commentModel
+exports.deleteComment =  (req, res) => {
+	commentModel
 		.findOne({
 			where: { id: req.params.id },
 		})
 		.then((comment) => {
-			if (
-				comment.media !==
-				`${req.protocol}://${req.get("host")}/images/default/avatar.webp`
-			) {
+			if (comment.media) {
 				const filename = comment.media.split("/images/")[1];
-				fs.unlinkSync(`images/${filename}`, () => {});
+				fs.unlink(`images/${filename}`, () => {});
 			}
-			postModel
+			commentModel
 				.destroy({ where: { id: req.params.id } })
 				.then(() => {
 					res.status(200).json({
@@ -109,16 +108,29 @@ exports.deleteComment = async (req, res) => {
 
 exports.adminDeleteComment =async (req, res) => {
 	commentModel
-		.destroy({ where: { id: req.params.id } })
-		.then(() => {
-			res.status(200).json({
-				message: "Commentaire supprimé avec succès !",
-			});
+		.findOne({
+			where: { id: req.params.id },
+		})
+		.then((comment) => {
+			if (comment.media) {
+				const filename = comment.media.split("/images/")[1];
+				fs.unlink(`images/${filename}`, () => {});
+			}
+			commentModel
+				.destroy({ where: { id: req.params.id } })
+				.then(() => {
+					res.status(200).json({
+						message: "Commentaire supprimé avec succès !",
+					});
+				})
+				.catch((error) =>
+					res.status(404).json({
+						message: "Erreur lors de la suppression dans la database !",
+						error,
+					}),
+				);
 		})
 		.catch((error) =>
-			res.status(404).json({
-				message: "Erreur lors de la suppression dans la database !",
-				error,
-			}),
+			res.status(500).json({ message: "Commentaire non trouvé !", error }),
 		);
 }
