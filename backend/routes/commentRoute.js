@@ -11,7 +11,6 @@ router.get("/", authUser, commentCtrl.getAllComments);
 router.post("/", authUser, multer, commentCtrl.createComment);
 router.put("/:id", authUser, isOwnerComment, multer, commentCtrl.updateComment);
 router.delete("/:id",authUser, isOwnerComment, multer,commentCtrl.deleteComment);
-// router.patch("/:id/like", authUser, commentCtrl.likeComment);
 
 router.delete("/admin/:id", authAdmin, multer, commentCtrl.adminDeleteComment);
 

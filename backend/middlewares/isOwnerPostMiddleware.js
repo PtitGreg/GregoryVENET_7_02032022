@@ -10,8 +10,6 @@ module.exports = (req, res, next) => {
 				where: { id: req.params.id },
 			})
 			.then((post) => {
-				console.log('post.UserId: ', post.UserId);
-				console.log('req.token.userId: ', req.token.userId);
 				if (post.UserId === req.token.userId) {
 					next();
 				} else {

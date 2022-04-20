@@ -10,13 +10,14 @@ const postRoutes = require("./routes/postRoute");
 const commentRoutes = require("./routes/commentRoute");
 
 require("dotenv").config("./.env");
+
 const helmet = require("helmet");
 
 // db.sequelize.sync({ force: true }).then(() => {
 // 	console.log("Database Groupomania effacée et resynchronisée !");
 // });
 
-app.use(express.json())
+app.use(express.json());
 
 app.use((req, res, next) => {
 	res.setHeader("Access-Control-Allow-Origin", "*");
@@ -40,7 +41,5 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/user", userRoutes);
 app.use("/post", postRoutes);
 app.use("/comment", commentRoutes);
-
-
 
 module.exports = app;

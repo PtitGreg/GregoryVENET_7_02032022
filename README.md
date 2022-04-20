@@ -14,6 +14,8 @@ Il vous faut avoir installé sur votre machine :
   <li> MySql :  https://dev.mysql.com/downloads/installer/</li>
 </ul>
 
+## BACK END
+
 Créer un dossier vide puis cloner ce repository à l'intérieur :
 
 ```
@@ -37,9 +39,6 @@ CREATE DATABASE groupomania;
 USE groupomania;
 ```
 
-
-## BACK END
-
 Ouvrir un terminal dans le dossier backend puis effectuer les lignes de
 commandes suivantes :
 
@@ -47,6 +46,9 @@ commandes suivantes :
 npm install
 npm start
 ```
+En créant un compte avec "admin@groupomania.com", les droits admin seront automatiquement créés.
+
+Sequelize est configuré pour que la database Groupomania se synchronise automatiquement via la commande "sync()" dans app.js.
 
 ## FRONT END
 

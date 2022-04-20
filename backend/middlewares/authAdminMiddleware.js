@@ -9,6 +9,8 @@ module.exports = (req, res, next) => {
 		if (!req.token.isAdmin) {
 			throw "Vous n'avez pas les droits requis !";
 		} else {
+			req.auth = req.token.userId
+			console.log('req.auth: ', req.auth);
 			next();
 		}
 	} catch (error) {

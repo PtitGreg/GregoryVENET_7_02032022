@@ -9,6 +9,7 @@ const isOwnerUser = require("../middlewares/isOwnerUserMiddleware");
 
 router.post("/signup", userCtrl.signup);
 router.post("/login", userCtrl.login);
+
 router.get("/", authUser, userCtrl.getAllUsers);
 router.get("/:id", authUser, userCtrl.getOneUser);
 router.put("/:id", authUser, isOwnerUser, multer, userCtrl.updateUser);

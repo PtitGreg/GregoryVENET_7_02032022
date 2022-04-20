@@ -12,7 +12,6 @@ router.get("/", authUser, postCtrl.getAllPosts);
 router.post("/", authUser, multer, postCtrl.createPost);
 router.put("/:id", authUser, isOwnerPost, multer, postCtrl.updatePost);
 router.delete("/:id", authUser, isOwnerPost, multer, postCtrl.deletePost);
-// router.patch("/:id/like", authUser, postCtrl.likePost);
 
 router.delete("/admin/:id", authAdmin, multer, postCtrl.adminDeletePost);
 

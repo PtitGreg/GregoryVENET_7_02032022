@@ -12,6 +12,12 @@
 # production
 /build
 
+# assets
+posts
+profil
+# dotenv
+.env
+
 # misc
 .DS_Store
 .env.local

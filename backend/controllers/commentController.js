@@ -19,17 +19,18 @@ exports.createComment = async (req, res) => {
 	if (req.file) {
 		reqBody = {
 			...reqBody,
+			UserId: req.token.userId,
 			media: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
 		};
 	}
 	await commentModel
-		.create(reqBody)
-		.then(() => res.status(201).json({ message: "Commentaire créé avec succès !" }))
-		.catch((err) => {
-			res.status(500).json({
-				message: err.message,
-			});
+	.create(reqBody)
+	.then(() => res.status(201).json({ message: "Commentaire créé avec succès !" }))
+	.catch((err) => {
+		res.status(500).json({
+			message: err.message,
 		});
+	});
 };
 
 exports.updateComment = async (req, res) => {
@@ -72,9 +73,9 @@ exports.updateComment = async (req, res) => {
 					});
 				});
 		})
-		// .catch((error) =>
-		// 	res.status(500).json({ message: "Commentaire non trouvé !", error }),
-		// );
+		.catch((error) =>
+			res.status(500).json({ message: "Commentaire non trouvé !", error }),
+		);
 };
 
 exports.deleteComment =  (req, res) => {

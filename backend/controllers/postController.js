@@ -19,7 +19,8 @@ exports.createPost = async (req, res) => {
 	if (req.file) {
 		reqBody = {
 			...reqBody,
-			media: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+			UserId: req.token.userId,
+			media: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
 		};
 	}
 	await postModel
@@ -38,6 +39,7 @@ exports.updatePost = async (req, res) => {
 		.then((post) => {
 			let dataBody = {
 				...req.body,
+				UserId: req.token.userId,
 			};
 			if (req.file) {
 				if (post.media) {
@@ -133,5 +135,3 @@ exports.adminDeletePost = async (req, res) => {
 			res.status(500).json({ message: "Post non trouvé !", error }),
 		);
 };
-
-// exports.likePost = async (req, res) => {};

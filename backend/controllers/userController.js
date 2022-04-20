@@ -43,7 +43,9 @@ exports.signup = async (req, res) => {
 			};
 			userModel
 				.create(reqBody)
-				.then(() => res.status(201).json({ message: "Utilisateur créé !" }))
+				.then(() =>
+					res.status(201).json({ message: "Utilisateur créé avec succès!" }),
+				)
 				.catch((err) => {
 					res.status(500).json({
 						message: err.message,
@@ -58,42 +60,43 @@ exports.signup = async (req, res) => {
 	}
 };
 exports.login = async (req, res) => {
-	await userModel
-		.findOne({ where: { email: req.body.email } })
-		.then((user) => {
-			if (!user) {
-				return res
-					.status(401)
-					.json({ error: "identifiant non valide ou inéxistant" });
-			} else {
-				bcrypt
-					.compare(req.body.password, user.password)
-					.then((valid) => {
-						if (!valid) {
-							return res.status(401).json({ error: "password non valide" });
-						}
-						res.status(200).json({
-							id: user.id,
-							username: user.username,
-							token: jwt.sign(
-								{
-									userId: user.id,
-									isAdmin: user.isAdmin,
-								},
-								process.env.TOKEN_KEY,
-								{
-									expiresIn: "24h",
-								},
-							),
-							message: "Utilisateur connecté avec succès !",
-						});
-					})
-					.catch((error) => res.status(500).json({ error }));
-			}
-		})
-		.catch((error) => res.status(500).json({ error }));
+		await userModel
+			.findOne({ where: { email: req.body.email } })
+			.then((user) => {
+				if (!user) {
+					return res
+						.status(401)
+						.json({ errorMail: "identifiants non valide ou inéxistant" });
+				} else {
+					bcrypt
+						.compare(req.body.password, user.password)
+						.then((valid) => {
+							if (!valid) {
+								return res.status(401).json({ errorPassword: "Mot de passe incorrect !" });
+							}
+							res.status(200).json({
+								id: user.id,
+								username: user.username,
+								token: jwt.sign(
+									{
+										userId: user.id,
+										isAdmin: user.isAdmin,
+									},
+									process.env.TOKEN_KEY,
+									{
+										expiresIn: "8h",
+									},
+								),
+								message: "Utilisateur connecté avec succès !",
+							});
+						})
+						.catch((error) => res.status(500).json({ error }));
+				}
+			})
+			.catch((error) => res.status(500).json({ error }));
 };
-exports.getAllUsers = async (req, res, next) => {
+
+exports.getAllUsers = async (req, res) => {
 	await userModel
 		.findAll()
 		.then((users) => res.status(200).json(users))
@@ -192,6 +195,7 @@ exports.deleteUser = async (req, res) => {
 				const filename = user.media.split("/images/")[1];
 				fs.unlink(`images/${filename}`, () => {});
 			}
+			delete req.token;
 			userModel
 				.destroy({ where: { id: req.params.id } })
 				.then(() => {
