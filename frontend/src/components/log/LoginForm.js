@@ -20,20 +20,24 @@ const LoginForm = () => {
 			},
 		})
 			.then((res) => {
-					localStorage.setItem("token", res.data.token);
-					localStorage.setItem("id", res.data.id);
-					window.location = "/";
+				localStorage.setItem("token", res.data.token);
+				localStorage.setItem("id", res.data.id);
+				window.location = "/"; //a modifier
 			})
 			.catch((err) => {
-				const errData = err.response.data
+				console.log(err.response);
+				const errData = err.response.data;
 				if (errData.errorMail) {
 					emailError.innerHTML = err.response.data.errorMail;
-				} else if (errData.errorPassword) {
+				} else {
+					emailError.innerHTML = ""
+				}
+				if (errData.errorPassword) {
 					passwordError.innerHTML = err.response.data.errorPassword;
 				} else {
+					passwordError.innerHTML = ""
 					console.log(err);
 				}
-
 			});
 	};
 
