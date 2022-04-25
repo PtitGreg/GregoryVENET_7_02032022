@@ -1,7 +1,7 @@
 // Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
 
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Profil from "./pages/ProfilPage";
 import Home from "./pages/HomePage";
 import User from "./pages/UserPage";
@@ -9,9 +9,9 @@ import Notify from "./pages/NotifPage";
 import Users from "./pages/UsersPage";
 import { LoginContext } from "./components/AppContext";
 import { decodeToken, isExpired } from "react-jwt";
+import Navbar from "./components/Navbar"
 
 const App = () => {
-	// let test = Navigate();
 	const [uId, setUid] = useState(null);
 	const [myToken, setMyToken] = useState(null);
 
@@ -24,7 +24,7 @@ const App = () => {
 
 			if (!myDecodedToken && isMyTokenExpired) {
 				localStorage.clear();
-				// test = "/profil";
+				window.location("/profil");
 				return;
 			}
 		}
@@ -34,6 +34,7 @@ const App = () => {
 	return (
 		<LoginContext.Provider value={uId}>
 			<BrowserRouter>
+				<Navbar />
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/profil" element={<Profil />} />

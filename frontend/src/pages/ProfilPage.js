@@ -5,23 +5,23 @@ import { LoginContext } from "../components/AppContext";
 import Log from "../components/log";
 import LogImg from "../styles/assets/log.svg";
 
-const profilPage = () => {
+const ProfilPage = () => {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const uId = useContext(LoginContext);
 	return (
 		<div className="profil-page">
-			{uId ? (
-				<h1>COMPOSANT A CREER</h1>
-			) : (
-				<div className="log-container">
-					<Log />
-					<div className="img-container">
-						<img src={LogImg} alt="img-log" />
-					</div>
-				</div>
-			)}
+			{uId
+				? <h1>COMPOSANT A CREER</h1>
+				: (
+						<div className="log-container">
+							<Log />
+							<div className="img-container">
+								<img src={LogImg} alt="img-log" />
+							</div>
+						</div>
+				  )}
 		</div>
 	);
 };
 
-export default profilPage;
+export default ProfilPage;
