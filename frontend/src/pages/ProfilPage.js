@@ -1,17 +1,16 @@
 // Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
 
 import React, { useContext } from "react";
-import { userIdContext } from "../components/AppContext";
+import { LoginContext } from "../components/AppContext";
 import Log from "../components/log";
 import LogImg from "../styles/assets/log.svg";
 
 const profilPage = () => {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const userId = useContext(userIdContext);
-	console.log('userIdprofilepage: ', userId);
+	const uId = useContext(LoginContext);
 	return (
 		<div className="profil-page">
-			{userId ? (
+			{uId ? (
 				<h1>COMPOSANT A CREER</h1>
 			) : (
 				<div className="log-container">

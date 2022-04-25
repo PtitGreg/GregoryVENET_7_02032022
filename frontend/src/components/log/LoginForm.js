@@ -1,7 +1,11 @@
+// Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
+
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+	let navigate = useNavigate();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -9,6 +13,8 @@ const LoginForm = () => {
 		e.preventDefault();
 		const emailError = document.querySelector(".email.error");
 		const passwordError = document.querySelector(".password.error");
+		emailError.innerHTML = "";
+		passwordError.innerHTML = "";
 
 		axios({
 			method: "post",
@@ -22,20 +28,17 @@ const LoginForm = () => {
 			.then((res) => {
 				localStorage.setItem("token", res.data.token);
 				localStorage.setItem("id", res.data.id);
-				window.location = "/"; //a modifier
+				navigate("/")
 			})
 			.catch((err) => {
 				console.log(err.response);
 				const errData = err.response.data;
 				if (errData.errorMail) {
 					emailError.innerHTML = err.response.data.errorMail;
-				} else {
-					emailError.innerHTML = ""
 				}
 				if (errData.errorPassword) {
 					passwordError.innerHTML = err.response.data.errorPassword;
 				} else {
-					passwordError.innerHTML = ""
 					console.log(err);
 				}
 			});
@@ -46,7 +49,7 @@ const LoginForm = () => {
 			<label htmlFor="email">Email</label>
 			<br />
 			<input
-				type="text"
+				type="email"
 				name="email"
 				id="email"
 				onChange={(e) => setEmail(e.target.value)}

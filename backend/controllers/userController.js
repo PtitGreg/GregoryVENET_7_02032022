@@ -46,15 +46,16 @@ exports.signup = async (req, res) => {
 				.then(() =>
 					res.status(201).json({ message: "Utilisateur créé avec succès!" }),
 				)
-				.catch((err) => {
+				.catch((error) => {
+					console.log('error: ', error.message);
 					res.status(500).json({
-						message: err.message,
+						error
 					});
 				});
 		});
 	} else {
 		res.status(401).json({
-			message:
+			errorPassword:
 				"Le mot de passe doit contenir 8 caractères, 1 majuscule, 1 minuscule et 2 chiffres minimum!",
 		});
 	}
