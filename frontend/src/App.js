@@ -4,42 +4,42 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Profil from "./pages/ProfilPage";
 import Home from "./pages/HomePage";
-import User from "./pages/UserPage";
 import Notify from "./pages/NotifPage";
 import Users from "./pages/UsersPage";
+import Navbar from "./components/Navbar";
 import { LoginContext } from "./components/AppContext";
 import { decodeToken, isExpired } from "react-jwt";
-import Navbar from "./components/Navbar"
+import { useDispatch } from "react-redux";
+import { getUser } from "./actions/user.actions";
 
 const App = () => {
-	const [uId, setUid] = useState(null);
 	const [myToken, setMyToken] = useState(null);
-
-	const isLogged = () => {
-		setUid(parseInt(localStorage.getItem("id")));
-		setMyToken(localStorage.getItem("token"));
-		if (myToken && uId) {
+	const [userId, setUserId] = useState(null);
+	const dispatch = useDispatch();
+	const controlToken = () => {
+		setMyToken(localStorage.getItem("Token"));
+		setUserId(parseInt(localStorage.getItem("Id")));
+		if (myToken && userId) {
 			const myDecodedToken = decodeToken(myToken);
 			const isMyTokenExpired = isExpired(myToken);
-
+			dispatch(getUser(userId))
 			if (!myDecodedToken && isMyTokenExpired) {
 				localStorage.clear();
-				window.location("/profil");
-				return;
+				window.location = "/";
 			}
 		}
-	};
+	}
 
-	useEffect(isLogged);
+	useEffect(controlToken);
+
 	return (
-		<LoginContext.Provider value={uId}>
+		<LoginContext.Provider value={myToken}>
 			<BrowserRouter>
 				<Navbar />
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/profil" element={<Profil />} />
 					<Route path="/users" element={<Users />} />
-					<Route path="/user" element={<User />} />
 					<Route path="/notify" element={<Notify />} />
 					<Route path="*" element={<Profil />} />
 				</Routes>

@@ -87,7 +87,7 @@ i {
 }
 body {
   font-family: $font-2;
-  height: 100vh;
+  height: 95vh;
   background: center no-repeat url("../styles/assets/icons/logo.svg");
   background-color: $color-3;
   color: $color-3;
@@ -98,5 +98,6 @@ body {
 }
 .success {
   color: green;
+  padding: 1rem;
   font-weight: bold;
 }

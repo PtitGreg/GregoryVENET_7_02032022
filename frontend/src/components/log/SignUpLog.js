@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import axios from "axios";
-import LoginForm from "./LoginForm";
+import LoginForm from "./LoginLog";
 
 const SingUpForm = () => {
 	const [formSubmit, setFormSubmit] = useState(false);

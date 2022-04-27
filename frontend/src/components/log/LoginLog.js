@@ -2,12 +2,12 @@
 
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
-const LoginForm = () => {
-	let navigate = useNavigate();
+const LoginLog = () => {
+	// let navigate = useNavigate();
 	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+	const [ password, setPassword ] = useState("");
 
 	const handleLogin = (e) => {
 		e.preventDefault();
@@ -17,7 +17,7 @@ const LoginForm = () => {
 		passwordError.innerHTML = "";
 
 		axios({
-			method: "post",
+			method: "POST",
 			url: `${process.env.REACT_APP_BACKEND_URL}user/login`,
 			withCredentials: false,
 			data: {
@@ -26,12 +26,13 @@ const LoginForm = () => {
 			},
 		})
 			.then((res) => {
-				localStorage.setItem("token", res.data.token);
-				localStorage.setItem("id", res.data.id);
-				navigate("/")
+				localStorage.setItem("Token", res.data.token);
+				localStorage.setItem("Id", res.data.id);
+				// navigate("/")
+				window.location = "/";
 			})
 			.catch((err) => {
-				console.log(err.response);
+				console.log("erreur login",err.response);
 				const errData = err.response.data;
 				if (errData.errorMail) {
 					emailError.innerHTML = err.response.data.errorMail;
@@ -45,7 +46,7 @@ const LoginForm = () => {
 	};
 
 	return (
-		
+
 		<form action="" onSubmit={handleLogin} id="sign-up-form">
 			<label htmlFor="email">Email</label>
 			<br />
@@ -53,6 +54,7 @@ const LoginForm = () => {
 				type="email"
 				name="email"
 				id="email"
+				required
 				onChange={(e) => setEmail(e.target.value)}
 				value={email}
 				placeholder="Email..."
@@ -65,6 +67,7 @@ const LoginForm = () => {
 				type="password"
 				name="password"
 				id="password"
+				required
 				onChange={(e) => setPassword(e.target.value)}
 				value={password}
 				placeholder="Mot de passe..."
@@ -76,4 +79,4 @@ const LoginForm = () => {
 	);
 };
 
-export default LoginForm;
+export default LoginLog;

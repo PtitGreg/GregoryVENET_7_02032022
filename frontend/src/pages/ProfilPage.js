@@ -3,15 +3,15 @@
 import React, { useContext } from "react";
 import { LoginContext } from "../components/AppContext";
 import Log from "../components/log";
+import UpdateProfil from "../components/profil/UpdateProfil";
 import LogImg from "../styles/assets/log.svg";
 
 const ProfilPage = () => {
-	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const uId = useContext(LoginContext);
+	const myToken = useContext(LoginContext);
 	return (
 		<div className="profil-page">
-			{uId
-				? <h1>COMPOSANT A CREER</h1>
+			{myToken
+				? <UpdateProfil />
 				: (
 						<div className="log-container">
 							<Log />
