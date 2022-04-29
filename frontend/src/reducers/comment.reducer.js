@@ -1,14 +1,15 @@
 // Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
 
-import { GET_POSTS } from "../actions/post.actions";
+import { GET_COMMENTS } from "../actions/comment.actions";
 
 const initialState = {};
 
-export default function postReducer(state = initialState, action) {
+export default function commentReducer(state = initialState, action) {
 	switch (action.type) {
-		case GET_POSTS:
+		case GET_COMMENTS:
 			return action.payload;
 		default:
 			return state;
+
 	}
 }

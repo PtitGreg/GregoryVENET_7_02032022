@@ -1,22 +1,25 @@
+// Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
+
 import axios from "axios";
 
 export const GET_USER = "GET_USER";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
-export const UPDATE_BIO = "UPDATE_BIO"
+export const UPDATE_BIO = "UPDATE_BIO";
 
 export const getUser = (userId) => {
 	return async (dispatch) => {
 		try {
 			const res = await axios({
-				method: "get",
+				method: "GET",
 				url: `${process.env.REACT_APP_BACKEND_URL}user/${userId}`,
 				headers: {
-					authorization: `Bearer ${localStorage.getItem("Token")}`
-				}
-			})
+					authorization: `Bearer ${localStorage.getItem("Token")}`,
+				},
+			});
 			dispatch({ type: GET_USER, payload: res.data });
+		} catch (err) {
+			console.log("err axios", err);
 		}
-		catch(err)  {console.log("err axios", err)};
 	};
 };
 
@@ -42,7 +45,7 @@ export const uploadPicture = (data, userId) => {
 		} catch (error) {
 			console.log(error);
 			if (error.response) {
-				alert("erreur",error.response.data.message);
+				alert("erreur", error.response.data.message);
 			}
 			if (error.response.status === 401) {
 				localStorage.clear();
@@ -52,8 +55,8 @@ export const uploadPicture = (data, userId) => {
 	};
 };
 
-export const updateBio = (userId, bio ) => {
-	console.log('userId: ', userId);
+export const updateBio = (userId, bio) => {
+	console.log("userId: ", userId);
 	return async (dispatch) => {
 		try {
 			await axios({

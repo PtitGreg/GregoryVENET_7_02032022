@@ -15,11 +15,13 @@ exports.getAllPosts = async (req, res) => {
 };
 
 exports.createPost = async (req, res) => {
-	let reqBody = req.body;
+	let reqBody = {
+		...req.body,
+		UserId: req.token.userId,
+	};
 	if (req.file) {
 		reqBody = {
 			...reqBody,
-			UserId: req.token.userId,
 			media: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
 		};
 	}

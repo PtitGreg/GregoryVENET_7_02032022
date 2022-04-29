@@ -15,14 +15,18 @@ exports.getAllComments = async (req, res) => {
 };
 
 exports.createComment = async (req, res) => {
-	let reqBody = req.body;
+	let reqBody = {
+		...req.body,
+		UserId: req.token.userId,
+	};
 	if (req.file) {
+		console.log('req.token.userId: ', req.token.userId);
 		reqBody = {
 			...reqBody,
-			UserId: req.token.userId,
 			media: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
 		};
 	}
+	console.log('req.token.userId: ', req.token.userId);
 	await commentModel
 	.create(reqBody)
 	.then(() => res.status(201).json({ message: "Commentaire créé avec succès !" }))

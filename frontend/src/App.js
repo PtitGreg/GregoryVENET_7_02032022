@@ -25,7 +25,7 @@ const App = () => {
 			dispatch(getUser(userId))
 			if (!myDecodedToken && isMyTokenExpired) {
 				localStorage.clear();
-				window.location = "/";
+				window.location = "/profil";
 			}
 		}
 	}

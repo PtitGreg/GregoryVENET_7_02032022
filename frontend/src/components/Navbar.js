@@ -13,8 +13,7 @@ import { useSelector } from "react-redux";
 
 const Navbar = () => {
 	const myToken = useContext(LoginContext);
-	const userData = useSelector((state) => state.userReducer)
-
+	const userData = useSelector((state) => state.userReducer);
 
 	return (
 		<nav>
@@ -27,7 +26,7 @@ const Navbar = () => {
 						<ul>
 							<li className="welcome">
 								<NavLink to="/">
-									<h5>Bonjour et bienvenue {userData.lastName}</h5>
+									<h5>Bienvenue {userData.lastName}</h5>
 								</NavLink>
 							</li>
 							<NavLink to="/profil">

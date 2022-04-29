@@ -8,11 +8,11 @@ import thunk from "redux-thunk";
 import rootReducer from "./reducers";
 import { getUsers } from "./actions/users.actions";
 
-//devtools
 
 import App from "./App";
 import "./styles/index.scss";
 
+//devtools
 import { composeWithDevTools } from "redux-devtools-extension";
 import logger from "redux-logger";
 

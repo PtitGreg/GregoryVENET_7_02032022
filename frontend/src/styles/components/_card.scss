@@ -7,7 +7,9 @@
   border-radius: 20px;
   margin: 8px auto;
   position: relative;
+  width: 1130%;
   min-height: 100px;
+  background-color: $color-4;
 
   @media screen and(max-width: 590px) {
     grid-template-columns: 1fr;
@@ -63,7 +65,7 @@
         flex-direction: column;
       }
 
-      .pseudo {
+      .lastName {
         display: flex;
 
         @media screen and(max-width: 590px) {
@@ -238,7 +240,7 @@
           flex-direction: column;
         }
 
-        .pseudo {
+        .lastName {
           display: flex;
 
           h3 {
