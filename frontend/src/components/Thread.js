@@ -1,42 +1,48 @@
-import React from "react";
-import { useState, useEffect } from "react";
+// Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
+
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../actions/post.actions";
 import { getComments } from "../actions/comment.actions";
 import { isEmpty } from "./Utils";
-import Card from "./post/Card"
-
+import Card from "./post/Card";
 
 const Thread = () => {
-	const [ loadPost, setLoadPost ] = useState(true);
-	const [count, setCount] = useState(5)
+	const [loadPost, setLoadPost] = useState(true);
+	const [count, setCount] = useState(5);
 	const dispatch = useDispatch();
 	const posts = useSelector((state) => state.postReducer);
+
 	const loadMore = () => {
-		if (window.innerHeight + document.documentElement.scrollTop + 1 > document.scrollingElement.scrollHeight) {
-			setLoadPost(true)
+		if (
+			window.innerHeight + document.documentElement.scrollTop + 1 >
+			document.scrollingElement.scrollHeight
+		) {
+			setLoadPost(true);
 		}
-	}
+	};
 
 	useEffect(() => {
 		if (loadPost) {
 			dispatch(getPosts(count));
 			dispatch(getComments());
 			setLoadPost(false);
-			setCount(count + 5)
+			setCount(count + 5);
 		}
-		window.addEventListener("scroll", loadMore)
-		return () => window.removeEventListener("scroll", loadMore)
-	}, [loadPost, dispatch, count ]);
+		window.addEventListener("scroll", loadMore);
+		return () => window.removeEventListener("scroll", loadMore);
+	}, [loadPost, dispatch, count]);
 
-	return <div className="thread-container">
-		<ul>
-			{!isEmpty(posts[ 0 ]) &&
-				posts.map((post) => {
-				return <Card post={post} key={post.id} />;
-			})}
-		</ul>
-	</div>
+	return (
+		<div className="thread-container">
+			<ul>
+				{!isEmpty(posts[0]) &&
+					posts.map((post) => {
+						return <Card post={post} key={post.id} />;
+					})}
+			</ul>
+		</div>
+	);
 };
 
 export default Thread;

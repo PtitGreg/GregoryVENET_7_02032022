@@ -50,7 +50,7 @@ export const deletePost = (id) => {
 				url: `${process.env.REACT_APP_BACKEND_URL}post/${id}`,
 				headers: {
 					authorization: `Bearer ${localStorage.getItem("Token")}`,
-				}
+				},
 			})
 			dispatch({type: DELETE_POST, payload: {id}})
 		} catch (err) {
@@ -58,3 +58,5 @@ export const deletePost = (id) => {
 		}
 	}
 }
+
+

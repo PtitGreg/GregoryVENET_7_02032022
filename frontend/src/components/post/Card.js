@@ -1,3 +1,5 @@
+// Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
+
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { isEmpty, dateParser } from "../Utils";
@@ -11,12 +13,12 @@ const Card = ({ post }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const usersData = useSelector((state) => state.usersReducer);
 	const userData = useSelector((state) => state.userReducer);
-	const commentData = useSelector((state) => state.commentReducer);
+	const commentData = useSelector((state)=> state.commentReducer);
+
 	const [isUpdated, setIsUpdated] = useState(false);
 	const [textUpdate, setTextUpdate] = useState(null);
 	const [showComment, setShowComment] = useState(false);
 	const dispatch = useDispatch();
-	console.log(post);
 
 	const updateItem = async () => {
 		if (textUpdate) {
@@ -79,29 +81,29 @@ const Card = ({ post }) => {
 						{post.media && (
 							<img src={post.media} alt="image_post" className="card-pic" />
 						)}
-					</div>
-					{userData.id === post.UserId && (
-						<div className="button-container">
-							<div onClick={() => setIsUpdated(!isUpdated)}>
-								<img src={editImg} alt="icon_edit" />
+						{userData.id === post.UserId && (
+							<div className="button-container">
+								<div onClick={() => setIsUpdated(!isUpdated)}>
+									<img src={editImg} alt="icon_edit" />
+								</div>
+								<DeleteCard id={post.id} />
 							</div>
-							<DeleteCard id={post.id} />
-						</div>
-					)}
-					<div className="card-footer">
-						<div className="comment-icon">
-							<img
-								src={icon_comment}
-								alt="icon_comment"
-								onClick={() => setShowComment(!showComment)}
-							/>
-							<span>
-								{commentData.map((comment) => {
-									if (comment.PostId === post.id) {
-										return comment.id;
-									} else return null;
-								})}
-							</span>
+						)}
+						<div className="card-footer">
+							<div className="comment-icon">
+								<img
+									onClick={() => setShowComment(!showComment)}
+									src={icon_comment}
+									alt="comment"
+								/>
+								<span>
+									{commentData.map((comment) => {
+										if (comment.PostId === post.id) {
+											return comment.length;
+										} else return null;
+									})}
+								</span>
+							</div>
 						</div>
 						{showComment && <CardComment post={post} />}
 					</div>
@@ -110,5 +112,4 @@ const Card = ({ post }) => {
 		</li>
 	);
 };
-
 export default Card;

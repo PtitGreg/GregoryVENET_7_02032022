@@ -26,7 +26,6 @@ exports.createComment = async (req, res) => {
 			media: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
 		};
 	}
-	console.log('req.token.userId: ', req.token.userId);
 	await commentModel
 	.create(reqBody)
 	.then(() => res.status(201).json({ message: "Commentaire créé avec succès !" }))
@@ -46,7 +45,6 @@ exports.updateComment = async (req, res) => {
 			};
 			if (req.file) {
 				if (comment.media) {
-					console.log('comment.media: ', comment.media);
 					const img = comment.media.split("/images/")[1];
 					fs.unlink("images/" + img, () => {});
 				}

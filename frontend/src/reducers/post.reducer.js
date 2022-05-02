@@ -1,6 +1,12 @@
 // Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
 
-import { DELETE_POST, GET_POSTS, UPDATE_POST } from "../actions/post.actions";
+import {
+	DELETE_POST,
+	GET_POSTS,
+	UPDATE_POST,
+	GET_COMMENTS,
+} from "../actions/post.actions";
+
 
 const initialState = {};
 
@@ -22,4 +28,4 @@ export default function postReducer(state = initialState, action) {
 		default:
 			return (state)
 	}
-}
+};
