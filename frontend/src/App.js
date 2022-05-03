@@ -7,7 +7,7 @@ import Home from "./pages/HomePage";
 import Notify from "./pages/NotifPage";
 import Users from "./pages/UsersPage";
 import Navbar from "./components/Navbar";
-import { LoginContext } from "./components/AppContext";
+import { uIdContext } from "./components/AppContext";
 import { decodeToken, isExpired } from "react-jwt";
 import { useDispatch } from "react-redux";
 import { getUser } from "./actions/user.actions";
@@ -33,7 +33,7 @@ const App = () => {
 	useEffect(controlToken);
 
 	return (
-		<LoginContext.Provider value={myToken}>
+		<uIdContext.Provider value={userId}>
 			<BrowserRouter>
 				<Navbar />
 				<Routes>
@@ -44,7 +44,7 @@ const App = () => {
 					<Route path="*" element={<Profil />} />
 				</Routes>
 			</BrowserRouter>
-		</LoginContext.Provider>
+		</uIdContext.Provider>
 	);
 };
 

@@ -2,23 +2,23 @@
 
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPosts } from "../../actions/post.actions";
-import { getComments, addComment } from "../../actions/comment.actions";
+import { addComment, getComments } from "../../actions/comment.actions";
 import { dateParser, isEmpty } from "../Utils";
+import EditDeleteComment from "./EditDeleteComment";
 
 const CardComment = ({ post }) => {
-	const [text, setText] = useState("");
+	const [content, setContent] = useState("");
 	const userData = useSelector((state) => state.userReducer);
 	const usersData = useSelector((state) => state.usersReducer);
 	const commentData = useSelector((state) => state.commentReducer);
 	const dispatch = useDispatch();
 
-	const handleComments = (e) => {
+	const handleComment = (e) => {
 		e.preventDefault();
-		if (text) {
-			dispatch(addComment(post.id, userData.id, text))
-				.then(() => dispatch(getPosts))
-				.then(() => setText(""));
+		if (content) {
+			dispatch(addComment(post.id, userData.id, content))
+			.then(() => dispatch(getComments()))
+			.then(() => setContent(""));
 		} else {
 			alert("Merci de saisir du texte !");
 		}
@@ -64,18 +64,19 @@ const CardComment = ({ post }) => {
 									</div>
 									<span>{dateParser(comment.createdAt)}</span>
 									<p>{comment.content}</p>
+									<EditDeleteComment comment={comment} postId={post.id} />
 								</div>
 							</div>
 						</div>
 					);
 				})}
 			{userData.id && (
-				<form action="" onSubmit={handleComments} className="comment-form">
+				<form action="" onSubmit={handleComment} className="comment-form">
 					<input
 						type="text"
 						name="text"
-						onChange={(e) => setText(e.target.value)}
-						value={text}
+						onChange={(e) => setContent(e.target.value)}
+						value={content}
 						placeholder="Laisser un commentaire"
 					/>
 					<br />

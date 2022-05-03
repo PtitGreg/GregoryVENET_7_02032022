@@ -183,6 +183,7 @@
       align-items: center;
       justify-content: center;
       justify-content: space-between;
+      border-top: $color-2 solid 1px ;
       padding: 12px 0 4px;
 
       img {
@@ -234,7 +235,7 @@
       }
       .comment-header {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
 
         @media screen and(max-width: 440px) {
           flex-direction: column;

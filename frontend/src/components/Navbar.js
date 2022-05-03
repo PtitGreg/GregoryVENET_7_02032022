@@ -2,7 +2,7 @@
 
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { LoginContext } from "./AppContext";
+import { uIdContext } from "./AppContext";
 import logo from "../styles/assets/icons/icon-left-font-monochrome-black.svg";
 import Users from "../styles/assets/icons/users.svg";
 import Notify from "../styles/assets/icons/notification-bell.svg";
@@ -12,7 +12,7 @@ import ImgLogin from "../styles/assets/icons/login.svg";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {
-	const myToken = useContext(LoginContext);
+	const myToken = useContext(uIdContext);
 	const userData = useSelector((state) => state.userReducer);
 
 	return (

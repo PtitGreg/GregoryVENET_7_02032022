@@ -9,12 +9,11 @@ import editImg from "../../styles/assets/icons/edit.svg";
 import DeleteCard from "./DeleteCard";
 import CardComment from "./CardComment";
 
-const Card = ({ post }) => {
-	const [isLoading, setIsLoading] = useState(true);
+const Card = ({ post  }) => {
 	const usersData = useSelector((state) => state.usersReducer);
 	const userData = useSelector((state) => state.userReducer);
 	const commentData = useSelector((state)=> state.commentReducer);
-
+	const [isLoading, setIsLoading] = useState(true);
 	const [isUpdated, setIsUpdated] = useState(false);
 	const [textUpdate, setTextUpdate] = useState(null);
 	const [showComment, setShowComment] = useState(false);
@@ -97,11 +96,7 @@ const Card = ({ post }) => {
 									alt="comment"
 								/>
 								<span>
-									{commentData.map((comment) => {
-										if (comment.PostId === post.id) {
-											return comment.length;
-										} else return null;
-									})}
+									{}
 								</span>
 							</div>
 						</div>

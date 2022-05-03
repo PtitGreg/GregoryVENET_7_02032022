@@ -4,7 +4,6 @@ import {
 	DELETE_POST,
 	GET_POSTS,
 	UPDATE_POST,
-	GET_COMMENTS,
 } from "../actions/post.actions";
 
 

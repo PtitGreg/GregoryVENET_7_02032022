@@ -2,8 +2,10 @@
 
 import axios from "axios";
 
-export const GET_COMMENTS = "GET_COMMENT";
+export const GET_COMMENTS = "GET_COMMENTS";
 export const ADD_COMMENT = "ADD_COMMENT";
+export const UPDATE_COMMENT = "UPDATE_COMMENT"
+export const DELETE_COMMENT = "DELETE_COMMENT"
 
 export const getComments = () => {
 	return async (dispatch) => {
@@ -22,7 +24,7 @@ export const getComments = () => {
 	};
 };
 
-export const addComment = (UserId, PostId, content) => {
+export const addComment = (postId, userId, content) => {
 	return async (dispatch) => {
 		try {
 			await axios({
@@ -32,14 +34,52 @@ export const addComment = (UserId, PostId, content) => {
 					authorization: `Bearer ${localStorage.getItem("Token")}`,
 				},
 				data: {
-					UserId,
-					PostId,
+					userId,
+					postId,
 					content,
 				},
 			});
-			dispatch({ type: ADD_COMMENT, payload: { PostId } });
+			dispatch({ type: ADD_COMMENT, payload: { postId } });
 		} catch (err) {
 			console.log("err post comment", err);
 		}
 	};
 };
+
+export const updateComment = (postId, commentId, content) => {
+	console.log('postId: ', postId);
+	console.log('commentId: ', commentId);
+	console.log('content: ', content);
+	return async (dispatch) => {
+		try {
+			await axios({
+				method: "PUT",
+				url: `${process.env.REACT_APP_BACKEND_URL}comment/${commentId}`,
+				headers: {
+					authorization: `Bearer ${localStorage.getItem("Token")}`,
+				},
+				data: {
+					commentId, content
+				},
+			});
+			dispatch({ type: UPDATE_COMMENT, payload: { postId, commentId, content } });
+		} catch (err) {
+			console.log("err update comment", err);
+		}
+	};
+};
+
+export const deleteComment = (postId, commentId) => dispatch => {
+	return async (dispatch) => {
+		try {
+			await axios({
+				method: "DELETE",
+				url: `${process.env.REACT_APP_BACKEND_URL}comment/${commentId}`,
+				data:{commentId}
+			})
+			dispatch({ type:DELETE_COMMENT, payload: { postId, commentId } });
+		} catch (err) {
+			console.log(err);
+		}
+	}
+}

@@ -59,6 +59,7 @@ button,
 input[type="submit"] {
   background: $color-2;
   color: $color-1;
+  border: 1px solid;
   font-family: $font-3;
   cursor: pointer;
   transition: 0.2s;
