@@ -4,10 +4,10 @@ import axios from "axios";
 
 export const GET_COMMENTS = "GET_COMMENTS";
 export const ADD_COMMENT = "ADD_COMMENT";
-export const UPDATE_COMMENT = "UPDATE_COMMENT"
-export const DELETE_COMMENT = "DELETE_COMMENT"
+export const UPDATE_COMMENT = "UPDATE_COMMENT";
+export const DELETE_COMMENT = "DELETE_COMMENT";
 
-export const getComments = () => {
+export const getComments = (post) => {
 	return async (dispatch) => {
 		try {
 			const res = await axios({
@@ -25,6 +25,7 @@ export const getComments = () => {
 };
 
 export const addComment = (postId, userId, content) => {
+	console.log('postId: ', postId);
 	return async (dispatch) => {
 		try {
 			await axios({
@@ -35,7 +36,7 @@ export const addComment = (postId, userId, content) => {
 				},
 				data: {
 					userId,
-					postId,
+					PostId:postId,
 					content,
 				},
 			});
@@ -46,40 +47,41 @@ export const addComment = (postId, userId, content) => {
 	};
 };
 
-export const updateComment = (postId, commentId, content) => {
-	console.log('postId: ', postId);
-	console.log('commentId: ', commentId);
-	console.log('content: ', content);
+export const updateComment = (id, content) => {
+	console.log('id: ', id);
 	return async (dispatch) => {
 		try {
 			await axios({
 				method: "PUT",
-				url: `${process.env.REACT_APP_BACKEND_URL}comment/${commentId}`,
+				url: `${process.env.REACT_APP_BACKEND_URL}comment/${id}`,
 				headers: {
 					authorization: `Bearer ${localStorage.getItem("Token")}`,
 				},
-				data: {
-					commentId, content
-				},
+				data: { content, id },
 			});
-			dispatch({ type: UPDATE_COMMENT, payload: { postId, commentId, content } });
+			dispatch({ type: UPDATE_COMMENT, payload: { content, id } });
+			console.log('content: ', content);
 		} catch (err) {
-			console.log("err update comment", err);
+			console.log("err put axios", err);
 		}
 	};
 };
 
-export const deleteComment = (postId, commentId) => dispatch => {
+export const deleteComment = (commentId) => {
+	console.log('commentId: ', commentId);
 	return async (dispatch) => {
 		try {
 			await axios({
 				method: "DELETE",
 				url: `${process.env.REACT_APP_BACKEND_URL}comment/${commentId}`,
-				data:{commentId}
-			})
-			dispatch({ type:DELETE_COMMENT, payload: { postId, commentId } });
+				headers: {
+					authorization: `Bearer ${localStorage.getItem("Token")}`,
+				},
+				data: { commentId },
+			});
+			dispatch({ type: DELETE_COMMENT, payload: { commentId } });
 		} catch (err) {
-			console.log(err);
+			console.log("error delete comment", err);
 		}
-	}
-}
+	};
+};
