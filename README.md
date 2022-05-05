@@ -31,6 +31,8 @@ PORT = ""
 TOKEN_KEY = ""
 ```
 
+Dans le fichier   "/frontend/.env_a_adapter indiquer le numéro de port souhaité a la place des guillemets et le renommer en ".env
+
 
 Ouvrir MySql command Line client puis effectuer ces deux lignes de commandes :
 
