@@ -16,7 +16,7 @@ Il vous faut avoir installé sur votre machine :
 
 ## BACK END
 
-Créer un dossier vide puis cloner ce repository à l'intérieur :
+Cloner ce repository à l'intérieur :
 
 ```
 git clone https://github.com/PtitGreg/GregoryVENET_7_02032022.git
@@ -24,7 +24,7 @@ git clone https://github.com/PtitGreg/GregoryVENET_7_02032022.git
 
 ## .env
 
-Dans le fichier /backend/.env_a_adapter ,mettre les éléments demandés entre guillemets dans le fichier et le renommer en ".env"
+Dans le fichier "/backend/.env_a_adapter", mettre les éléments demandés entre guillemets dans le fichier et le renommer en ".env"
 
 ```
 PORT = ""

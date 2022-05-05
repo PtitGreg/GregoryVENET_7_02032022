@@ -4,8 +4,6 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Profil from "./pages/ProfilPage";
 import Home from "./pages/HomePage";
-import Notify from "./pages/NotifPage";
-import Users from "./pages/UsersPage";
 import Navbar from "./components/Navbar";
 import { uIdContext } from "./components/AppContext";
 import { decodeToken, isExpired } from "react-jwt";
@@ -39,8 +37,6 @@ const App = () => {
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/profil" element={<Profil />} />
-					<Route path="/users" element={<Users />} />
-					<Route path="/notify" element={<Notify />} />
 					<Route path="*" element={<Profil />} />
 				</Routes>
 			</BrowserRouter>

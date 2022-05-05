@@ -26,7 +26,7 @@ schemaPassword
 
 exports.signup = async (req, res) => {
 	let admin = "";
-	const media = `${req.protocol}://${req.get("host")}/images/default/avatar.webp`;
+	let media = `${req.protocol}://${req.get("host")}/images/default/avatar.webp`;
 	if (schemaPassword.validate(req.body.password)) {
 		if (req.body.email === "admin@groupomania.com") {
 			admin = true;
