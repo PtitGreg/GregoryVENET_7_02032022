@@ -19,7 +19,7 @@ Il vous faut avoir installé sur votre machine :
 Cloner ce repository à l'intérieur :
 
 ```
-git clone https://github.com/PtitGreg/GregoryVENET_7_02032022.git
+git clone https://github.com/PtitGreg/Groupomania.git
 ```
 
 ## .env
