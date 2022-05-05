@@ -20,7 +20,7 @@ export const getComments = (post) => {
 			dispatch({ type: GET_COMMENTS, payload: res.data });
 		} catch (err) {
 			if (err.response) {
-				// alert("Erreur lors de l'affichage des commentaires", err.response.data);
+				alert("Erreur lors de l'affichage des commentaires", err.response.data);
 			}
 		}
 	};

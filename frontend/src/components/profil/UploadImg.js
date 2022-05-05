@@ -26,7 +26,7 @@ const UploadImg = () => {
 			<input
 				type="file"
 				id="file"
-				name="file"
+				name="media"
 				accept=".jpg, .jpeg, .png, .gif, .webp"
 				onChange={(e) => setMedia(e.target.files[0])}
 			/>

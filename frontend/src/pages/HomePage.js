@@ -11,7 +11,9 @@ const Home = () => {
 	return (
 		<div className="home">
 			<div className="main">
-				<div className="home-header">{uId ? <NewPostForm /> : Log}</div>
+				<div className="home-header">
+					{uId ? <NewPostForm /> : <Log />}
+				</div>
 				<Thread />
 			</div>
 		</div>
