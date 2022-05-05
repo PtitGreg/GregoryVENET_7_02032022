@@ -26,7 +26,7 @@ schemaPassword
 
 exports.signup = async (req, res) => {
 	let admin = "";
-	let media = `${req.protocol}://${req.get("host")}/images/default/avatar.webp`;
+	const media = `${req.protocol}://${req.get("host")}/images/default/avatar.webp`;
 	if (schemaPassword.validate(req.body.password)) {
 		if (req.body.email === "admin@groupomania.com") {
 			admin = true;
@@ -128,12 +128,21 @@ exports.updateUser = async (req, res) => {
 	await userModel
 		.findOne({ where: { id: req.params.id } })
 		.then((user) => {
+			console.log('user: ', user);
 			let dataBody = {
 				...req.body,
 			};
 			if (req.file) {
 				const img = user.media.split("/images/")[1];
-				fs.unlink("images/" + img, () => {});
+				const fileNameDefaultUser = `${req.protocol}://${req.get(
+					"host",
+				)}/images/default/avatar.webp`;
+				const fileNameDefaultAdmin = `${req.protocol}://${req.get(
+					"host",
+				)}/images/default/admin.jpg`;
+				if (user.media !==fileNameDefaultUser && user.media !==fileNameDefaultAdmin) {
+					fs.unlink("images/" + img, () => {});
+				}
 				dataBody = {
 					...dataBody,
 					media: `${req.protocol}://${req.get("host")}/images/${

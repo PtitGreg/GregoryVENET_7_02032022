@@ -13,9 +13,9 @@ require("dotenv").config("./.env");
 
 const helmet = require("helmet");
 
-db.sequelize.sync({ force: true }).then(() => {
-	console.log("Database Groupomania effacée et resynchronisée !");
-});
+// db.sequelize.sync({ force: true }).then(() => {
+// 	console.log("Database Groupomania effacée et resynchronisée !");
+// });
 
 app.use(express.json());
 

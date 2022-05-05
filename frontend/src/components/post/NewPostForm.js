@@ -44,6 +44,7 @@ const NewPostForm = () => {
 	};
 
 	useEffect(() => {
+		console.log("userData: ", !isEmpty(userData));
 		if (!isEmpty(userData)) {
 			setIsLoading(false);
 		}
