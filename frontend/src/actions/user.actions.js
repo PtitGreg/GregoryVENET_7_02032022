@@ -18,7 +18,7 @@ export const getUser = (userId) => {
 			});
 			dispatch({ type: GET_USER, payload: res.data });
 		} catch (err) {
-			console.log("err axios", err);
+			console.log("err axios", err.response.data);
 		}
 	};
 };
@@ -68,16 +68,8 @@ export const updateBio = (userId, bio) => {
 				data: { bio },
 			});
 			dispatch({ type: UPDATE_BIO, payload: bio });
-		} catch (error) {
-			console.log(error);
-			if (error.response.data.job) {
-				alert(error.response.data.job.msg);
-			} else if (error.response.data.message) {
-				alert(error.response.data.message);
-			} else if (error.response.status === 401) {
-				localStorage.clear();
-				window.location = "/";
-			}
+		} catch (err) {
+			console.log(err.response.data);
 		}
 	};
 };

@@ -6,7 +6,6 @@
 /node_modules
 /.pnp
 .pnp.js
-/assets
 
 # testing
 /coverage
@@ -16,7 +15,7 @@
 
 # assets
 posts
-profil
+
 # dotenv
 .env
 

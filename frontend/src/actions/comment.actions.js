@@ -19,7 +19,7 @@ export const getComments = (post) => {
 			});
 			dispatch({ type: GET_COMMENTS, payload: res.data });
 		} catch (err) {
-			console.log("err axios", err);
+			console.log("err axios", err.response.data);
 		}
 	};
 };
@@ -42,7 +42,7 @@ export const addComment = (postId, userId, content) => {
 			});
 			dispatch({ type: ADD_COMMENT, payload: { postId } });
 		} catch (err) {
-			console.log("err post comment", err);
+			console.log("err post comment", err.response.data);
 		}
 	};
 };
@@ -62,7 +62,7 @@ export const updateComment = (id, content) => {
 			dispatch({ type: UPDATE_COMMENT, payload: { content, id } });
 			console.log('content: ', content);
 		} catch (err) {
-			console.log("err put axios", err);
+			console.log("err put axios", err.response.data);
 		}
 	};
 };
@@ -81,7 +81,7 @@ export const deleteComment = (commentId) => {
 			});
 			dispatch({ type: DELETE_COMMENT, payload: { commentId } });
 		} catch (err) {
-			console.log("error delete comment", err);
+			console.log("error delete comment", err.response.data);
 		}
 	};
 };

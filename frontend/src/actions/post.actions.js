@@ -20,7 +20,7 @@ export const getPosts = (num) => {
 			const array = res.data.slice(0, num);
 			dispatch({ type: GET_POSTS, payload: array });
 		} catch (err) {
-			console.log("err get axios", err);
+			console.log("err get axios", err.response.data);
 		}
 	};
 };
@@ -28,7 +28,7 @@ export const getPosts = (num) => {
 export const addPost = (data) => {
 	return async (dispatch) => {
 		try {
-			const res = await axios({
+			await axios({
 				method: "POST",
 				url: `${process.env.REACT_APP_BACKEND_URL}post/`,
 				headers: {
@@ -37,7 +37,7 @@ export const addPost = (data) => {
 				data
 			});
 		} catch (err) {
-			console.log("err get axios", err);
+			console.log("err get axios", err.response.data);
 		}
 	};
 };
@@ -55,7 +55,7 @@ export const updatePost = (id, content) => {
 			})
 			dispatch({ type: UPDATE_POST, payload:{content, id}})
 		} catch (err) {
-			console.log("err put axios",err);
+			console.log("err put axios", err.response.data);
 		}
 	}
 }
@@ -72,7 +72,7 @@ export const deletePost = (id) => {
 			})
 			dispatch({type: DELETE_POST, payload: {id}})
 		} catch (err) {
-			console.log("err delete axios", err);
+			console.log("err delete axios", err.response.data);
 		}
 	}
 }

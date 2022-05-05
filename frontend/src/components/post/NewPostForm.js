@@ -14,7 +14,7 @@ const NewPostForm = () => {
 	const userData = useSelector((state) => state.userReducer);
 	const dispatch = useDispatch()
 
-	const handlePost = async () => {
+	const handlePost = () => {
 		if (message|| postMedia) {
 			const data = new FormData()
 			data.append("UserId", userData.id)
@@ -22,7 +22,7 @@ const NewPostForm = () => {
 			if (file) {
 				data.append("media", file)
 			}
-			await dispatch(addPost(data))
+			dispatch(addPost(data))
 			dispatch(getPosts())
 			cancelPost()
 
@@ -44,7 +44,6 @@ const NewPostForm = () => {
 	};
 
 	useEffect(() => {
-		console.log("userData: ", !isEmpty(userData));
 		if (!isEmpty(userData)) {
 			setIsLoading(false);
 		}
