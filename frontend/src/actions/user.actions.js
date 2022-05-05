@@ -18,7 +18,7 @@ export const getUser = (userId) => {
 			});
 			dispatch({ type: GET_USER, payload: res.data });
 		} catch (err) {
-			console.log("err axios", err.response.data);
+			console.log("err axios", err);
 		}
 	};
 };
@@ -68,8 +68,8 @@ export const updateBio = (userId, bio) => {
 				data: { bio },
 			});
 			dispatch({ type: UPDATE_BIO, payload: bio });
-		} catch (err) {
-			console.log(err.response.data);
+		} catch (error) {
+			console.log(error);
 		}
 	};
 };

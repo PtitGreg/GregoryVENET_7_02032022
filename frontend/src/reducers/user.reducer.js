@@ -16,8 +16,8 @@ export default function userReducer(state = initialState, action) {
 		case UPDATE_BIO:
 			return {
 				...state,
-				bio:action.payload,
-			}
+				bio: action.payload,
+			};
 		default:
 			return state;
 	}

@@ -2,12 +2,12 @@
 
 import React, { useState } from "react";
 import axios from "axios";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const LoginLog = () => {
-	// let navigate = useNavigate();
+	let navigate = useNavigate();
 	const [email, setEmail] = useState("");
-	const [ password, setPassword ] = useState("");
+	const [password, setPassword] = useState("");
 
 	const handleLogin = (e) => {
 		e.preventDefault();
@@ -28,11 +28,11 @@ const LoginLog = () => {
 			.then((res) => {
 				localStorage.setItem("Token", res.data.token);
 				localStorage.setItem("Id", res.data.id);
-				// navigate("/")
-				window.location = "/";
+				navigate("/")
+				// window.location = "/";
 			})
 			.catch((err) => {
-				console.log("erreur login",err.response);
+				console.log("erreur login", err.response);
 				const errData = err.response.data;
 				if (errData.errorMail) {
 					emailError.innerHTML = err.response.data.errorMail;
@@ -46,7 +46,6 @@ const LoginLog = () => {
 	};
 
 	return (
-
 		<form action="" onSubmit={handleLogin} id="sign-up-form">
 			<label htmlFor="email">Email</label>
 			<br />

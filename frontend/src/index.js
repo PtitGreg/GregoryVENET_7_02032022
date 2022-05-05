@@ -8,7 +8,6 @@ import thunk from "redux-thunk";
 import rootReducer from "./reducers";
 import { getUsers } from "./actions/users.actions";
 
-
 import App from "./App";
 import "./styles/index.scss";
 

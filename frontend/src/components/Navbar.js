@@ -32,6 +32,12 @@ const Navbar = () => {
 							<NavLink to="/profil">
 								<img src={User} alt="Icône utilisateur" />
 							</NavLink>
+							<NavLink to="/notify">
+								<img src={Notify} alt="Icône de notification" />
+							</NavLink>
+							<NavLink to="/users">
+								<img src={Users} alt="Icône des utilisateurs" />
+							</NavLink>
 							<Logout />
 						</ul>
 					) : (

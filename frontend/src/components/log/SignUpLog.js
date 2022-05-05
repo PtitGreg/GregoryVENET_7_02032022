@@ -25,9 +25,9 @@ const SingUpForm = () => {
 		);
 		const termsError = document.querySelector(".terms.error");
 
-		firstNameError.innerHTML= ""
-		lastNameError.innerHTML = ""
-		emailError.innerHTML = ""
+		firstNameError.innerHTML = "";
+		lastNameError.innerHTML = "";
+		emailError.innerHTML = "";
 		passwordConfirmError.innerHTML = "";
 		termsError.innerHTML = "";
 
