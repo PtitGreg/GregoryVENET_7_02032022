@@ -1,25 +1,23 @@
+// Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
+
 .post-container {
   margin: 0 auto 0;
   padding: 16px 40px;
   border-radius: 20px;
   position: relative;
   background: $color-4;
-  width: 40rem;
-
-
   i {
     font-size: 1.5rem;
     margin: 20px 0;
     color: $color-3;
   }
-
   .data {
     position: absolute;
     right: 42px;
     text-align: right;
-
     @media screen and(max-width: 420px) {
       right: 10px;
+
     }
     @media screen and(max-width: 380px) {
       display: none;
@@ -57,7 +55,7 @@
     .card-container {
       background: $white;
       border-radius: 20px 20px 6px 20px;
-      width: auto;
+      width: 100%;
 
       .card-left {
         text-align: left;
@@ -135,7 +133,7 @@
         }
 
         button {
-          width: 190px;
+          width: 100%;
           padding: 10px 20px;
           background: $white;
           transition: 0.2s;

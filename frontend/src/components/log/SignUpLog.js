@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import LoginForm from "./LoginLog";
 
-const SingUpForm = () => {
+const SignUpForm = () => {
 	const [formSubmit, setFormSubmit] = useState(false);
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
@@ -62,7 +62,6 @@ const SingUpForm = () => {
 						emailError.innerHTML = "Email déjà existant";
 					}
 					if (errData.error.errors[0].path === "firstName") {
-						console.log("test");
 						firstNameError.innerHTML =
 							"Le Nom doit contenir uniquement etre 2 et 20 lettres";
 					}
@@ -167,4 +166,4 @@ const SingUpForm = () => {
 	);
 };
 
-export default SingUpForm;
+export default SignUpForm;

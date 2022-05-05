@@ -1,13 +1,15 @@
+// Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
+
 .card-container {
   display: grid;
-  grid-template-columns: 66px 1fr;
+  grid-template-columns: 4rem 1fr;
   border: 2px solid $color-2;
   margin: 10px;
   padding: 16px;
   border-radius: 20px;
   margin: 8px auto;
   position: relative;
-  width: 40rem;
+  max-width: 70rem;
   min-height: 100px;
   background-color: $color-4;
 
@@ -37,7 +39,7 @@
       @media screen and(max-width: 590px) {
         height: 40px;
         width: 40px;
-        margin-left: 18px;
+        margin-left: 0;
         border-radius: 14px;
       }
     }
@@ -48,12 +50,14 @@
   }
 
   .card-right {
-    @media screen and(max-width: 590px) {
-      margin-left: 18px;
-    }
+    display: flex;
+    width:100%;
+    flex-direction: column;
+
     .card-header {
       display: flex;
       justify-content: space-between;
+      width: 100%;
       margin: 2px 0 4px;
       min-height: 35px;
 
@@ -62,6 +66,7 @@
       }
 
       @media screen and(max-width: 440px) {
+        display: flex;
         flex-direction: column;
       }
 
@@ -132,12 +137,12 @@
       .button-container {
         .btn {
           background: $color-2;
-          width: 240px;
+          width: 50%;
           transform: translateY(-3px);
 
           &:hover {
             background: $color-1;
-            width: 250px;
+            width: 60%;
             letter-spacing: 1px;
           }
         }
@@ -209,13 +214,14 @@
       }
     }
     .comment-container.client {
+      width:100%;
       background: $color-2;
       border: none;
       border-radius: 20px 20px 6px 20px;
     }
     .comment-container {
       display: grid;
-      grid-template-columns: 50px 1fr;
+      grid-template-columns: 0% 1fr;
       border: 1px solid $color-2;
       padding: 15px;
       margin: 5px 0;
@@ -239,6 +245,7 @@
 
         @media screen and(max-width: 440px) {
           flex-direction: column;
+          width:100%;
         }
 
         .lastName {
@@ -302,16 +309,17 @@
           }
           input[type="text"] {
             margin: 4px 0;
+            width:100%;
             background: $white;
             font-size: 1.15rem;
             padding: 16px;
-            width: 100%;
             border-radius: 6px 20px 6px 20px;
           }
           .btn {
             display: flex;
             align-items: center;
             float: right;
+            width:100%;
 
             span {
               background: $white;
@@ -331,7 +339,7 @@
             }
             input[type="submit"] {
               background: $color-2;
-              width: inherit;
+              width:100%;
               transition: 0.2s;
 
               &:hover {
@@ -360,7 +368,7 @@
       input[type="submit"] {
         margin-top: 4px;
         padding: 12px 16px;
-        width: 120px;
+        width: 50%;
         background: $color-2;
         border-radius: 20px 6px 20px 20px;
         transition: 0.2s;
@@ -369,7 +377,7 @@
         &:hover {
           background: $color-1;
           letter-spacing: 2px;
-          width: 130px;
+          width: 60%;
         }
       }
       button {
@@ -395,7 +403,7 @@
   }
   .update-post {
     textarea {
-      width: 100% !important;
+      width: 100%;
       height: 80px;
     }
     .button-container {

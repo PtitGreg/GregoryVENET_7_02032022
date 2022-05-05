@@ -18,7 +18,9 @@ export const getUser = (userId) => {
 			});
 			dispatch({ type: GET_USER, payload: res.data });
 		} catch (err) {
-			console.log("err axios", err);
+			if (err.response) {
+				alert("Erreur lors de la récupération de l'utilisateur", err.response.data);
+			}
 		}
 	};
 };
@@ -42,12 +44,11 @@ export const uploadPicture = (data, userId) => {
 				},
 			});
 			dispatch({ type: UPLOAD_PICTURE, payload: res.data.media });
-		} catch (error) {
-			console.log(error);
-			if (error.response) {
-				alert("erreur", error.response.data.message);
+		} catch (err) {
+			if (err.response) {
+				alert("Fichier supérieur à 1Mb ou format incompatible !");
 			}
-			if (error.response.status === 401) {
+			if (err.response.status === 401) {
 				localStorage.clear();
 				window.location = "/";
 			}
@@ -68,8 +69,10 @@ export const updateBio = (userId, bio) => {
 				data: { bio },
 			});
 			dispatch({ type: UPDATE_BIO, payload: bio });
-		} catch (error) {
-			console.log(error);
+		} catch (err) {
+			if (err.response) {
+				alert("Erreur lors de la mise à jour de la bio", err.response.data);
+			}
 		}
 	};
 };

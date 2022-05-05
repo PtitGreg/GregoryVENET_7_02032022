@@ -7,6 +7,7 @@ export const ADD_POST = "ADD_POST";
 export const UPDATE_POST = "UPDATE_POST";
 export const DELETE_POST = "DELETE_POST";
 
+
 export const getPosts = (num) => {
 	return async (dispatch) => {
 		try {
@@ -20,7 +21,9 @@ export const getPosts = (num) => {
 			const array = res.data.slice(0, num);
 			dispatch({ type: GET_POSTS, payload: array });
 		} catch (err) {
-			console.log("err get axios", err.response.data);
+			if (err.response) {
+				alert("Erreur lors de l'affichage des posts", err.response.data);
+			}
 		}
 	};
 };
@@ -37,7 +40,9 @@ export const addPost = (data) => {
 				data
 			});
 		} catch (err) {
-			console.log("err get axios", err.response.data);
+			if (err.response) {
+				alert("Image limitée à 1Mb ou format incompatible");
+			}
 		}
 	};
 };
@@ -55,7 +60,9 @@ export const updatePost = (id, content) => {
 			})
 			dispatch({ type: UPDATE_POST, payload:{content, id}})
 		} catch (err) {
-			console.log("err put axios", err.response.data);
+			if (err.response) {
+				alert("Erreur lors de la mise à jour", err.response.data);
+			}
 		}
 	}
 }
@@ -72,7 +79,9 @@ export const deletePost = (id) => {
 			})
 			dispatch({type: DELETE_POST, payload: {id}})
 		} catch (err) {
-			console.log("err delete axios", err.response.data);
+			if (err.response) {
+				alert("Erreur lors de la suppression",err.response.data);
+			}
 		}
 	}
 }

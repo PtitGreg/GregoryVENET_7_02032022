@@ -28,11 +28,10 @@ const LoginLog = () => {
 			.then((res) => {
 				localStorage.setItem("Token", res.data.token);
 				localStorage.setItem("Id", res.data.id);
-				navigate("/")
-				// window.location = "/";
+				// navigate("/")
+				window.location = "/";
 			})
 			.catch((err) => {
-				console.log("erreur login", err.response);
 				const errData = err.response.data;
 				if (errData.errorMail) {
 					emailError.innerHTML = err.response.data.errorMail;

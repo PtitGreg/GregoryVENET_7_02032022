@@ -163,7 +163,6 @@
 			}
 			form {
 				position: relative;
-
 				label {
 					position: absolute;
 					transform: translate(-50%, -50%);
@@ -179,14 +178,11 @@
 				}
 				input[type="file"] {
 					position: absolute;
+					width: 50%;
 					opacity: 1;
 					transform: translate(-3px, -50%);
 					cursor: pointer;
 					padding: 10px 20px;
-
-					@media screen and(max-width: 1121px) {
-						opacity: 0;
-					}
 				}
 				input[type="submit"] {
 					margin-top: 10px;

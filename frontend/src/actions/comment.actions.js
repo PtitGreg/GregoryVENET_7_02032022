@@ -19,13 +19,14 @@ export const getComments = (post) => {
 			});
 			dispatch({ type: GET_COMMENTS, payload: res.data });
 		} catch (err) {
-			console.log("err axios", err.response.data);
+			if (err.response) {
+				// alert("Erreur lors de l'affichage des commentaires", err.response.data);
+			}
 		}
 	};
 };
 
 export const addComment = (postId, userId, content) => {
-	console.log('postId: ', postId);
 	return async (dispatch) => {
 		try {
 			await axios({
@@ -42,13 +43,14 @@ export const addComment = (postId, userId, content) => {
 			});
 			dispatch({ type: ADD_COMMENT, payload: { postId } });
 		} catch (err) {
-			console.log("err post comment", err.response.data);
+			if (err.response) {
+				alert("Erreur lors de l'ajout d'un commentaire", err.response.data);
+			}
 		}
 	};
 };
 
 export const updateComment = (id, content) => {
-	console.log('id: ', id);
 	return async (dispatch) => {
 		try {
 			await axios({
@@ -62,13 +64,14 @@ export const updateComment = (id, content) => {
 			dispatch({ type: UPDATE_COMMENT, payload: { content, id } });
 			console.log('content: ', content);
 		} catch (err) {
-			console.log("err put axios", err.response.data);
+			if (err.response) {
+				alert("Erreur lors de la mise à jour", err.response.data);
+			}
 		}
 	};
 };
 
 export const deleteComment = (commentId) => {
-	console.log('commentId: ', commentId);
 	return async (dispatch) => {
 		try {
 			await axios({
@@ -81,7 +84,9 @@ export const deleteComment = (commentId) => {
 			});
 			dispatch({ type: DELETE_COMMENT, payload: { commentId } });
 		} catch (err) {
-			console.log("error delete comment", err.response.data);
+			if (err.response) {
+				alert("Erreur lors de la suppression", err.response.data);
+			}
 		}
 	};
 };

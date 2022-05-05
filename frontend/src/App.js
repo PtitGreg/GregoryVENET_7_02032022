@@ -14,16 +14,13 @@ import { getUser } from "./actions/user.actions";
 const App = () => {
 	const [myToken, setMyToken] = useState(null);
 	const [ userId, setUserId ] = useState(null);
-	// const [isLoggedIn, setIsLoggedIn] = useState(false)
 	const dispatch = useDispatch();
 	const controlToken = () => {
 		setMyToken(localStorage.getItem("Token"));
 		setUserId(parseInt(localStorage.getItem("Id")));
 		if (myToken && userId) {
-			console.log('userId: ', userId);
 			const myDecodedToken = decodeToken(myToken);
 			const isMyTokenExpired = isExpired(myToken);
-			// setIsLoggedIn(true)
 			dispatch(getUser(userId));
 			if (!myDecodedToken || isMyTokenExpired) {
 				localStorage.clear();

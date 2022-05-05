@@ -16,7 +16,7 @@ Il vous faut avoir installé sur votre machine :
 
 ## BACK END
 
-Cloner ce repository à l'intérieur :
+Cloner ce repository à sur votre ordinateur :
 
 ```
 git clone https://github.com/PtitGreg/Groupomania.git
@@ -31,10 +31,9 @@ PORT = ""
 TOKEN_KEY = ""
 ```
 
-Dans le fichier   "/frontend/.env_a_adapter indiquer le numéro de port souhaité a la place des guillemets et le renommer en ".env
+Dans le fichier   "/frontend/.env_a_adapter indiquer le même numéro de port que le backend si dessus à la place des guillemets et le renommer en ".env"
 
-
-Ouvrir MySql command Line client puis effectuer ces deux lignes de commandes :
+Ouvrir MySql command Line client ou équivalent puis effectuer ces deux lignes de commandes :
 
 ```
 CREATE DATABASE groupomania;

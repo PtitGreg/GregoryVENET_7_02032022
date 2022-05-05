@@ -13,6 +13,7 @@ import "./styles/index.scss";
 
 //devtools
 import { composeWithDevTools } from "redux-devtools-extension";
+import { getPosts } from "./actions/post.actions";
 
 const store = createStore(
 	rootReducer,
@@ -20,6 +21,7 @@ const store = createStore(
 );
 
 store.dispatch(getUsers());
+store.dispatch(getPosts())
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>

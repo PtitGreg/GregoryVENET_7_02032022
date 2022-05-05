@@ -1,3 +1,5 @@
+// Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
@@ -12,35 +14,33 @@ const NewPostForm = () => {
 	const [postMedia, setPostMedia] = useState(null);
 	const [file, setFile] = useState();
 	const userData = useSelector((state) => state.userReducer);
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
 	const handlePost = () => {
-		if (message|| postMedia) {
-			const data = new FormData()
-			data.append("UserId", userData.id)
-			data.append('content', message)
+		if (message || postMedia) {
+			const data = new FormData();
+			data.append("UserId", userData.id);
+			data.append("content", message);
 			if (file) {
-				data.append("media", file)
+				data.append("media", file);
 			}
-			dispatch(addPost(data))
-			dispatch(getPosts())
-			cancelPost()
-
+			dispatch(addPost(data));
+			dispatch(getPosts());
+			cancelPost();
 		} else {
-			alert("Merci de remplir le champ !")
+			alert("Merci de remplir le champ !");
 		}
 	};
 
 	const handleMedia = (e) => {
-		setPostMedia(URL.createObjectURL(e.target.files[ 0 ]))
-		setFile(e.target.files[ 0 ]);
+		setPostMedia(URL.createObjectURL(e.target.files[0]));
+		setFile(e.target.files[0]);
 	};
 
-
 	const cancelPost = () => {
-		setMessage("")
-		setPostMedia("")
-		setFile("")
+		setMessage("");
+		setPostMedia("");
+		setFile("");
 	};
 
 	useEffect(() => {
@@ -64,7 +64,7 @@ const NewPostForm = () => {
 						<textarea
 							name="message"
 							id="message"
-							placeholder="Quoi de beau ?"
+							placeholder={"Quoi de neuf " + userData.lastName + " ?"}
 							onChange={(e) => setMessage(e.target.value)}
 							value={message}
 						/>
@@ -79,11 +79,11 @@ const NewPostForm = () => {
 											<h3>{userData.lastName}</h3>
 										</div>
 										<span>{timestampParser(Date.now())}</span>
-										</div>
-										<div className="content">
-											<p>{message}</p>
-											<img src={postMedia} alt="" />
-										</div>
+									</div>
+									<div className="content">
+										<p>{message}</p>
+										<img src={postMedia} alt="" />
+									</div>
 								</div>
 							</li>
 						) : null}
@@ -94,7 +94,7 @@ const NewPostForm = () => {
 									type="file"
 									name="media"
 									id="file-uploadPicture"
-									accept=".webp, .jpg, .png, jpeg, gif"
+									accept=".webp, .jpg, .png, .jpeg, .gif"
 									onChange={(e) => handleMedia(e)}
 								/>
 							</div>

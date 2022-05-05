@@ -1,16 +1,16 @@
 // Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
 
 import React from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ImgLogout from "../../styles/assets/icons/logout.svg";
 
 const Logout = () => {
-	// let navigate = useNavigate();
+	let navigate = useNavigate();
 
 	const handleLogout = (e) => {
 		e.preventDefault();
 		localStorage.clear();
-		// navigate("/profil");
+		// navigate("/");
 		window.location = "/";
 	};
 	return (
