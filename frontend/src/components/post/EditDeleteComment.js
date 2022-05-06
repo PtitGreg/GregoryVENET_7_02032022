@@ -6,11 +6,9 @@ import { uIdContext } from "../AppContext";
 import {
 	updateComment,
 	deleteComment,
-	getComments,
 } from "../../actions/comment.actions";
 import editCommImg from "../../styles/assets/icons/edit.svg";
 import deleteImg from "../../styles/assets/icons/trash.svg";
-import { getPosts } from "../../actions/post.actions";
 
 const EditDeleteComment = ({ comment, postId }) => {
 	const [isAuthor, setIsAuthor] = useState(false);

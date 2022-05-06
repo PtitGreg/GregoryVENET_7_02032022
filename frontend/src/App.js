@@ -14,18 +14,23 @@ import { getComments } from "./actions/comment.actions";
 
 const App = () => {
 	const [myToken, setMyToken] = useState(null);
-	const [userId, setUserId] = useState(null);
+	const [ userId, setUserId ] = useState(null);
+	const [isAdmin, setIsAdmin] = useState(false);
 	const dispatch = useDispatch();
 
 	const controlToken = () => {
 		setMyToken(localStorage.getItem("Token"));
 		setUserId(parseInt(localStorage.getItem("Id")));
+		setIsAdmin(localStorage.getItem("IsAdmin"))
 		if (myToken && userId) {
 			const myDecodedToken = decodeToken(myToken);
 			const isMyTokenExpired = isExpired(myToken);
 			dispatch(getUser(userId))
 			if (!myDecodedToken || isMyTokenExpired) {
 				localStorage.clear();
+				setMyToken(null)
+				setUserId(null)
+				setIsAdmin(false)
 				window.location = "/profil";
 			} else if (userId && myDecodedToken && !isMyTokenExpired) {
 				dispatch(getUsers(userId));
@@ -37,7 +42,7 @@ const App = () => {
 	useEffect(controlToken);
 
 	return (
-		<uIdContext.Provider value={userId}>
+		<uIdContext.Provider value={{userId, isAdmin}}>
 			<BrowserRouter>
 				<Navbar />
 				<Routes>

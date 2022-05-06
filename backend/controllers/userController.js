@@ -25,7 +25,7 @@ schemaPassword
 	.digits(2);
 
 exports.signup = async (req, res) => {
-	let admin = "";
+	let admin = false;
 	let media = `${req.protocol}://${req.get("host")}/images/default/avatar.webp`;
 	if (schemaPassword.validate(req.body.password)) {
 		if (req.body.email === "admin@groupomania.com") {
@@ -77,6 +77,7 @@ exports.login = async (req, res) => {
 							}
 							res.status(200).json({
 								id: user.id,
+								isAdmin:user.isAdmin,
 								username: user.username,
 								token: jwt.sign(
 									{

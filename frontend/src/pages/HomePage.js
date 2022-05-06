@@ -2,7 +2,6 @@
 
 import React, { useContext } from "react";
 import { uIdContext } from "../components/AppContext";
-import Log from "../components/log";
 import NewPostForm from "../components/post/NewPostForm";
 import Thread from "../components/Thread";
 

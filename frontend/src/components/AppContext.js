@@ -2,4 +2,7 @@
 
 import { createContext } from "react";
 
-export const uIdContext = createContext();
+const uIdContext = createContext();
+const adminContext = createContext()
+
+export {uIdContext, adminContext}

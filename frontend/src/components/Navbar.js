@@ -4,8 +4,6 @@ import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { uIdContext } from "./AppContext";
 import logo from "../styles/assets/icons/icon-left-font-monochrome-black.svg";
-import Users from "../styles/assets/icons/users.svg";
-import Notify from "../styles/assets/icons/notification-bell.svg";
 import User from "../styles/assets/icons/user.svg";
 import Logout from "./log/LogoutLog";
 import ImgLogin from "../styles/assets/icons/login.svg";

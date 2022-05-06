@@ -1,6 +1,6 @@
 // Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
 
-import React, { useContext } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";

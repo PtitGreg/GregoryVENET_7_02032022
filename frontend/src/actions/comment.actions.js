@@ -7,8 +7,7 @@ export const ADD_COMMENT = "ADD_COMMENT";
 export const UPDATE_COMMENT = "UPDATE_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
 
-export const getComments = (post) => {
-	console.log('getcommentscommentaction: ', post);
+export const getComments = () => {
 	return async (dispatch) => {
 		try {
 			const res = await axios({

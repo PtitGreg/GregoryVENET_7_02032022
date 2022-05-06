@@ -9,7 +9,7 @@ import editImg from "../../styles/assets/icons/edit.svg";
 import DeleteCard from "./DeleteCard";
 import CardComment from "./CardComment";
 
-const Card = ({ post  }) => {
+const Card = ({ post }) => {
 	const usersData = useSelector((state) => state.usersReducer);
 	const userData = useSelector((state) => state.userReducer);
 	const [isLoading, setIsLoading] = useState(true);
@@ -36,28 +36,21 @@ const Card = ({ post  }) => {
 			) : (
 				<>
 					<div className="card-left">
-						<img
-							src={
-								!isEmpty(usersData[0]) &&
-								usersData
-									.map((user) => {
-										if (user.id === post.UserId) return user.media;
-										else return null;
-									})
-									.join("")
-							}
-							alt="Photo_profil_post"
-						/>
+						{!isEmpty(usersData[0]) &&
+							usersData.map((user) =>
+								user.id === post.UserId ? (
+									<img key={user.id} className=""src={user.media} alt="Photo_profil_post" />
+								) : null,
+							)}
 					</div>
 					<div className="card-right">
 						<div className="card-header">
 							<div className="lastName">
 								<h3>
 									{!isEmpty(usersData[0]) &&
-										usersData.map((user) => {
-											if (user.id === post.UserId) return user.lastName;
-											else return null;
-										})}
+										usersData.map((user) =>
+											user.id === post.UserId ? user.lastName : null,
+										)}
 								</h3>
 							</div>
 							<span>{dateParser(post.createdAt)}</span>
@@ -94,9 +87,7 @@ const Card = ({ post  }) => {
 									src={icon_comment}
 									alt="comment"
 								/>
-								<span>
-									{}
-								</span>
+								<span>{}</span>
 							</div>
 						</div>
 						{showComment && <CardComment post={post} />}
