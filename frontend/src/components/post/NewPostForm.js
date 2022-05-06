@@ -13,7 +13,6 @@ const NewPostForm = () => {
 	const [postMedia, setPostMedia] = useState(null);
 	const [file, setFile] = useState();
 	const userData = useSelector((state) => state.userReducer);
-	console.log('userData: ', userData);
 	const dispatch = useDispatch();
 
 	const handlePost = () => {

@@ -11,15 +11,17 @@ const CardComment = ({ post }) => {
 	const [content, setContent] = useState("");
 	const userData = useSelector((state) => state.userReducer);
 	const usersData = useSelector((state) => state.usersReducer);
+	console.log('usersData: ', usersData);
 	const postData = useSelector((state) => state.postReducer);
 	const commentData = useSelector((state) => state.commentReducer);
+	console.log('commentData: ', commentData);
 	const dispatch = useDispatch();
 
 	const handleComment = (e) => {
 		e.preventDefault();
 		if (content) {
+			console.log('contentcardcomment: ', content);
 			dispatch(addComment(post.id, userData.id, content))
-				.then(() => dispatch(getComments()))
 				.then(() => setContent(""));
 		} else {
 			alert("Merci de saisir du texte !");
@@ -29,6 +31,7 @@ const CardComment = ({ post }) => {
 		<div className="comments-container">
 			{!isEmpty(commentData[0]) &&
 				postData.map((post) => {
+					console.log('postcardcomment: ', post);
 					return commentData.map((comment) => {
 						if(post.id === comment.PostId){
 							return (

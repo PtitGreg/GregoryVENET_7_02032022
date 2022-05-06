@@ -10,12 +10,13 @@ const Home = () => {
 	const uId = useContext(uIdContext);
 	return (
 		<div className="home">
-			<div className="main">
-				<div className="home-header">
-					{uId ? <NewPostForm /> : <Log />}
-				</div>
-				<Thread />
-			</div>
+			{uId ? (
+				<div className="main">
+					<div className="home-header">
+						<NewPostForm />
+					</div>
+					<Thread />
+				</div>) : (null)}
 		</div>
 	);
 };

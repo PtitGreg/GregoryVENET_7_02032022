@@ -9,11 +9,14 @@ import { uIdContext } from "./components/AppContext";
 import { decodeToken, isExpired } from "react-jwt";
 import { useDispatch } from "react-redux";
 import { getUser } from "./actions/user.actions";
+import { getUsers } from "./actions/users.actions";
+import { getComments } from "./actions/comment.actions";
 
 const App = () => {
 	const [myToken, setMyToken] = useState(null);
 	const [userId, setUserId] = useState(null);
 	const dispatch = useDispatch();
+
 	const controlToken = () => {
 		setMyToken(localStorage.getItem("Token"));
 		setUserId(parseInt(localStorage.getItem("Id")));
@@ -24,6 +27,9 @@ const App = () => {
 			if (!myDecodedToken || isMyTokenExpired) {
 				localStorage.clear();
 				window.location = "/profil";
+			} else if (userId && myDecodedToken && !isMyTokenExpired) {
+				dispatch(getUsers(userId));
+				dispatch(getComments(userId));
 			}
 		}
 	}

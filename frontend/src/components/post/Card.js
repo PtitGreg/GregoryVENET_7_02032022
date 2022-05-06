@@ -12,7 +12,6 @@ import CardComment from "./CardComment";
 const Card = ({ post  }) => {
 	const usersData = useSelector((state) => state.usersReducer);
 	const userData = useSelector((state) => state.userReducer);
-	const commentData = useSelector((state)=> state.commentReducer);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isUpdated, setIsUpdated] = useState(false);
 	const [textUpdate, setTextUpdate] = useState(null);
@@ -27,8 +26,8 @@ const Card = ({ post  }) => {
 	};
 
 	useEffect(() => {
-		!isEmpty(usersData[0]) && setIsLoading(false);
-	}, [usersData]);
+		!isEmpty(post) && setIsLoading(false);
+	}, [post, usersData]);
 
 	return (
 		<li className="card-container" key={post.id}>

@@ -1,12 +1,11 @@
 // Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
 
-import React from "react";
+import React, { useContext } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers";
-import { getUsers } from "./actions/users.actions";
 
 
 import App from "./App";
@@ -20,7 +19,7 @@ const store = createStore(
 	composeWithDevTools(applyMiddleware(thunk)),
 );
 
-store.dispatch(getUsers());
+// store.dispatch(getUsers());
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
