@@ -1,6 +1,6 @@
 // Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { isEmpty, dateParser } from "../Utils";
 import { updatePost } from "../../actions/post.actions";
@@ -8,6 +8,7 @@ import icon_comment from "../../styles/assets/icons/message1.svg";
 import editImg from "../../styles/assets/icons/edit.svg";
 import DeleteCard from "./DeleteCard";
 import CardComment from "./CardComment";
+import { uIdContext } from "../AppContext";
 
 const Card = ({ post }) => {
 	const usersData = useSelector((state) => state.usersReducer);
@@ -17,6 +18,7 @@ const Card = ({ post }) => {
 	const [textUpdate, setTextUpdate] = useState(null);
 	const [showComment, setShowComment] = useState(false);
 	const dispatch = useDispatch();
+	const { isAdmin } = useContext(uIdContext);
 
 	const updateItem = async () => {
 		if (textUpdate) {
@@ -24,7 +26,6 @@ const Card = ({ post }) => {
 		}
 		setIsUpdated(false);
 	};
-
 	useEffect(() => {
 		!isEmpty(post) && setIsLoading(false);
 	}, [post, usersData]);
@@ -39,7 +40,12 @@ const Card = ({ post }) => {
 						{!isEmpty(usersData[0]) &&
 							usersData.map((user) =>
 								user.id === post.UserId ? (
-									<img key={user.id} className=""src={user.media} alt="Photo_profil_post" />
+									<img
+										key={user.id}
+										className=""
+										src={user.media}
+										alt="Photo_profil_post"
+									/>
 								) : null,
 							)}
 					</div>
@@ -72,12 +78,15 @@ const Card = ({ post }) => {
 						{post.media && (
 							<img src={post.media} alt="image_post" className="card-pic" />
 						)}
-						{userData.id === post.UserId && (
+						{(isAdmin || userData.id === post.UserId) && (
 							<div className="button-container">
-								<div onClick={() => setIsUpdated(!isUpdated)}>
-									<img src={editImg} alt="icon_edit" />
-								</div>
-								<DeleteCard id={post.id} />
+								{userData.id === post.UserId && (
+									<div onClick={() => setIsUpdated(!isUpdated)}>
+										<img src={editImg} alt="icon_edit" />
+									</div>
+								)}
+
+								<DeleteCard id={post.id} isAdmin={isAdmin} />
 							</div>
 						)}
 						<div className="card-footer">

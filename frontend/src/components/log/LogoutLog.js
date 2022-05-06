@@ -7,7 +7,7 @@ const Logout = () => {
 	const handleLogout = (e) => {
 		e.preventDefault();
 		localStorage.clear();
-		window.location = "/";
+		window.location="/profil"
 	};
 	return (
 		<li onClick={handleLogout}>

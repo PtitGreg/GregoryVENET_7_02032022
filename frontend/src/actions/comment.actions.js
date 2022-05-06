@@ -62,7 +62,6 @@ export const updateComment = (id, content) => {
 				data: { content, id },
 			});
 			dispatch({ type: UPDATE_COMMENT, payload: { content, id } });
-			console.log('content: ', content);
 		} catch (err) {
 			if (err.response) {
 				alert("Erreur lors de la mise à jour", err.response.data);
@@ -71,18 +70,27 @@ export const updateComment = (id, content) => {
 	};
 };
 
-export const deleteComment = (commentId) => {
+export const deleteComment = (commentId, admin) => {
 	return async (dispatch) => {
 		try {
-			await axios({
-				method: "DELETE",
-				url: `${process.env.REACT_APP_BACKEND_URL}comment/${commentId}`,
-				headers: {
-					authorization: `Bearer ${localStorage.getItem("Token")}`,
-				},
-				data: { commentId },
-			});
-			dispatch({ type: DELETE_COMMENT, payload: { commentId } });
+			if (admin) {
+				await axios({
+					method: "DELETE",
+					url: `${process.env.REACT_APP_BACKEND_URL}comment/admin/${commentId}`,
+					headers: {
+						authorization: `Bearer ${localStorage.getItem("Token")}`,
+					},
+				});
+			} else {
+				await axios({
+					method: "DELETE",
+					url: `${process.env.REACT_APP_BACKEND_URL}comment/${commentId}`,
+					headers: {
+						authorization: `Bearer ${localStorage.getItem("Token")}`,
+					},
+				});
+			}
+			dispatch({ type: DELETE_COMMENT, payload: { commentId  } });
 		} catch (err) {
 			if (err.response) {
 				alert("Erreur lors de la suppression", err.response.data);
@@ -90,3 +98,5 @@ export const deleteComment = (commentId) => {
 		}
 	};
 };
+
+

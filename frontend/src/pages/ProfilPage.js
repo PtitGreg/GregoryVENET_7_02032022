@@ -7,10 +7,10 @@ import UpdateProfil from "../components/profil/UpdateProfil";
 import LogImg from "../styles/assets/log.svg";
 
 const ProfilPage = () => {
-	const Uid = useContext(uIdContext);
+	const {userId} = useContext(uIdContext);
 	return (
 		<div className="profil-page">
-			{Uid
+			{userId
 				? <UpdateProfil />
 				: (
 						<div className="log-container">

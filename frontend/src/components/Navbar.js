@@ -10,7 +10,7 @@ import ImgLogin from "../styles/assets/icons/login.svg";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {
-	const myToken = useContext(uIdContext);
+	const {userId} = useContext(uIdContext);
 	const userData = useSelector((state) => state.userReducer);
 
 	return (
@@ -20,7 +20,7 @@ const Navbar = () => {
 					<NavLink to="/">
 						<img src={logo} alt="logo Groupomania" />
 					</NavLink>
-					{myToken ? (
+					{userId ? (
 						<ul>
 							<li className="welcome">
 								<NavLink to="/">

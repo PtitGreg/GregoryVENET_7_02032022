@@ -6,10 +6,10 @@ import NewPostForm from "../components/post/NewPostForm";
 import Thread from "../components/Thread";
 
 const Home = () => {
-	const uId = useContext(uIdContext);
+	const { userId } = useContext(uIdContext);
 	return (
 		<div className="home">
-			{uId ? (
+			{userId ? (
 				<div className="main">
 					<div className="home-header">
 						<NewPostForm />

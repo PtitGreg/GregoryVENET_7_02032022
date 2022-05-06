@@ -23,8 +23,9 @@ const NewPostForm = () => {
 			if (file) {
 				data.append("media", file)
 			};
-			dispatch(addPost(data));
-			dispatch(getPosts());
+			dispatch(addPost(data)).then(() => {
+				dispatch(getPosts());
+			});
 			cancelPost();
 		} else {
 			alert("Veuillez entrer un message");

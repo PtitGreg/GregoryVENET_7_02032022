@@ -3,6 +3,6 @@
 import { createContext } from "react";
 
 const uIdContext = createContext();
-const adminContext = createContext()
+const adminContext = createContext();
 
-export {uIdContext, adminContext}
+export { uIdContext, adminContext };

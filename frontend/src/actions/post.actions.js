@@ -7,7 +7,6 @@ export const ADD_POST = "ADD_POST";
 export const UPDATE_POST = "UPDATE_POST";
 export const DELETE_POST = "DELETE_POST";
 
-
 export const getPosts = (num) => {
 	return async (dispatch) => {
 		try {
@@ -37,7 +36,7 @@ export const addPost = (data) => {
 				headers: {
 					authorization: `Bearer ${localStorage.getItem("Token")}`,
 				},
-				data
+				data,
 			});
 		} catch (err) {
 			if (err.response) {
@@ -56,34 +55,42 @@ export const updatePost = (id, content) => {
 				headers: {
 					authorization: `Bearer ${localStorage.getItem("Token")}`,
 				},
-				data: {content, id}
-			})
-			dispatch({ type: UPDATE_POST, payload:{content, id}})
+				data: { content, id },
+			});
+			dispatch({ type: UPDATE_POST, payload: { content, id } });
 		} catch (err) {
 			if (err.response) {
 				alert("Erreur lors de la mise à jour", err.response.data);
 			}
 		}
-	}
-}
+	};
+};
 
-export const deletePost = (id) => {
+export const deletePost = (id, isAdmin) => {
 	return async (dispatch) => {
 		try {
-			await axios({
-				method: "DELETE",
-				url: `${process.env.REACT_APP_BACKEND_URL}post/${id}`,
-				headers: {
-					authorization: `Bearer ${localStorage.getItem("Token")}`,
-				},
-			})
-			dispatch({type: DELETE_POST, payload: {id}})
+			if (isAdmin) {
+				await axios({
+					method: "DELETE",
+					url: `${process.env.REACT_APP_BACKEND_URL}post/admin/${id}`,
+					headers: {
+						authorization: `Bearer ${localStorage.getItem("Token")}`,
+					},
+				});
+			} else {
+				await axios({
+					method: "DELETE",
+					url: `${process.env.REACT_APP_BACKEND_URL}post/${id}`,
+					headers: {
+						authorization: `Bearer ${localStorage.getItem("Token")}`,
+					},
+				});
+			}
+			dispatch({ type: DELETE_POST, payload: { id } });
 		} catch (err) {
 			if (err.response) {
-				alert("Erreur lors de la suppression",err.response.data);
+				alert("Erreur lors de la suppression", err.response.data);
 			}
 		}
-	}
-}
-
-
+	};
+};

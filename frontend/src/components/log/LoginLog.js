@@ -26,9 +26,8 @@ const LoginLog = () => {
 			.then((res) => {
 				localStorage.setItem("Token", res.data.token);
 				localStorage.setItem("Id", res.data.id);
-				localStorage.setItem("isAdmin", res.data.isAdmin);
-				console.log('res.data: ', res.data);
-				window.location = "/";
+				localStorage.setItem("IsAdmin", res.data.isAdmin);
+				window.location ="/";
 			})
 			.catch((err) => {
 				const errData = err.response.data;

@@ -8,7 +8,7 @@ import deleteImg from "../../styles/assets/icons/trash.svg";
 const DeleteCard = (props) => {
 	const dispatch = useDispatch();
 
-	const deleteQuote = () => dispatch(deletePost(props.id));
+	const deleteQuote = () => dispatch(deletePost(props.id, props.isAdmin));
 
 	return (
 		<div

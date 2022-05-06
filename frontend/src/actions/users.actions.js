@@ -16,9 +16,7 @@ export const getUsers = () => {
 			});
 			dispatch({ type: GET_USERS, payload: res.data });
 		} catch (err) {
-			if (err.response) {
-				alert("Erreur lors de la récupération des utilisateurs", err.response.data);
-			}
+			console.log("err axios users", err);
 		}
 	};
 };

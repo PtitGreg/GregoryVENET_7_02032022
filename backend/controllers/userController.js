@@ -194,9 +194,10 @@ exports.updateUser = async (req, res) => {
 		.catch((error) => res.status(500).json("Utilisateur non trouvé !", error));
 };
 exports.deleteUser = async (req, res) => {
+	const userId = req.auth;
 	await userModel
 		.findOne({
-			where: { id: req.params.id },
+			where: { id: userId },
 		})
 		.then((user) => {
 			if (
@@ -227,9 +228,10 @@ exports.deleteUser = async (req, res) => {
 };
 
 exports.adminDeleteUser = async (req, res) => {
+	const userId = req.auth;
 	await userModel
 		.findOne({
-			where: { id: req.params.id },
+			where: { id: userId },
 		})
 		.then((user) => {
 			if (
