@@ -2,10 +2,12 @@
 
 import React, { useState } from "react";
 import axios from "axios";
+// import { useNavigate } from "react-router-dom";
 
 const LoginLog = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	// let navigate=useNavigate()
 
 	const handleLogin = (e) => {
 		e.preventDefault();
@@ -27,7 +29,8 @@ const LoginLog = () => {
 				localStorage.setItem("Token", res.data.token);
 				localStorage.setItem("Id", res.data.id);
 				localStorage.setItem("IsAdmin", res.data.isAdmin);
-				window.location ="/";
+				window.location.assign("/")
+				// navigate("/", {replace: true});
 			})
 			.catch((err) => {
 				const errData = err.response.data;

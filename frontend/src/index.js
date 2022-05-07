@@ -7,7 +7,6 @@ import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers";
 
-
 import App from "./App";
 import "./styles/index.scss";
 

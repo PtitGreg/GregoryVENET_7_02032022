@@ -66,7 +66,6 @@ const SignUpForm = () => {
 							"Le Nom doit contenir uniquement etre 2 et 20 lettres";
 					}
 					if (errData.error.errors[0].path === "lastName") {
-						console.log("test");
 						lastNameError.innerHTML =
 							"Le Prénom doit contenir uniquement etre 2 et 20 lettres";
 					}

@@ -6,14 +6,16 @@ import { uIdContext } from "../AppContext";
 import { updateComment, deleteComment } from "../../actions/comment.actions";
 import editCommImg from "../../styles/assets/icons/edit.svg";
 import deleteImg from "../../styles/assets/icons/trash.svg";
+import { useNavigate } from "react-router-dom";
 
-const EditDeleteComment = ({ comment, postId }) => {
+const EditDeleteComment = ({ comment }) => {
 	const [isAuthor, setIsAuthor] = useState(false);
 	const [edit, setEdit] = useState(false);
 	const [content, setContent] = useState("");
 	const { userId } = useContext(uIdContext);
 	const dispatch = useDispatch();
 	const { isAdmin } = useContext(uIdContext);
+	let navigate = useNavigate();
 
 	const handleUpdate = (e) => {
 		e.preventDefault();
@@ -27,6 +29,7 @@ const EditDeleteComment = ({ comment, postId }) => {
 	const handleDelete = (isAdmin) => {
 		dispatch(deleteComment(comment.id, isAdmin));
 		window.location.reload();
+		// navigate("/", { replace: true });
 	};
 
 	useEffect(() => {

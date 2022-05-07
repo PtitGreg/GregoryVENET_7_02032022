@@ -3,7 +3,7 @@
 import React, { useContext } from "react";
 import { uIdContext } from "../components/AppContext";
 import Log from "../components/log";
-import UpdateProfil from "../components/profil/UpdateProfil";
+import UpdateProfil from "../components/profil/EditDeleteProfil";
 import LogImg from "../styles/assets/log.svg";
 
 const ProfilPage = () => {
