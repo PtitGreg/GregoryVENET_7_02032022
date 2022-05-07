@@ -38,6 +38,7 @@ db.Sequelize = Sequelize;
 db.user = require("./userModel")(sequelize, Sequelize);
 db.post = require("./postModel")(sequelize, Sequelize);
 db.comment = require("./commentModel")(sequelize, Sequelize);
+console.log('db.commentmodel: ', db.comment);
 
 db.user.hasMany(db.post, { onDelete: "cascade" });
 db.user.hasMany(db.comment, { onDelete: "cascade" });
@@ -48,17 +49,7 @@ db.post.belongsTo(db.user, {
 		name: "UserId",
 	},
 });
-db.comment.belongsTo(db.post, {
-	foreignKey: {
-		allowNull: false,
-		name: "PostId",
-	},
-});
-db.comment.belongsTo(db.user, {
-	foreignKey: {
-		allowNull: false,
-		name: "UserId",
-	},
-});
+db.comment.belongsTo(db.post);
+db.comment.belongsTo(db.user);
 
 module.exports = db;

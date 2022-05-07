@@ -2,6 +2,7 @@
 
 const db = require("../models");
 const commentModel = db.comment;
+console.log('commentModelcontroller: ', commentModel);
 
 const fs = require("fs");
 
@@ -20,7 +21,6 @@ exports.createComment = async (req, res) => {
 		UserId: req.token.userId,
 	};
 	if (req.file) {
-		console.log("req.token.userId: ", req.token.userId);
 		reqBody = {
 			...reqBody,
 			media: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
@@ -43,6 +43,7 @@ exports.updateComment = async (req, res) => {
 	await commentModel
 		.findOne({ where: { id: req.params.id } })
 		.then((comment) => {
+			console.log("commentModelupdate: ", commentModel);
 			let dataBody = {
 				...req.body,
 			};
@@ -84,7 +85,6 @@ exports.updateComment = async (req, res) => {
 };
 
 exports.deleteComment = (req, res) => {
-	console.log("req.params.id: ", req.params.id);
 	commentModel
 		.findOne({
 			where: { id: req.params.id },
@@ -114,7 +114,6 @@ exports.deleteComment = (req, res) => {
 };
 
 exports.adminDeleteComment = async (req, res) => {
-	console.log("req.params.id: ", req.params.id);
 	await commentModel
 		.findOne({
 			where: { id: req.params.id },
