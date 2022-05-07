@@ -6,12 +6,12 @@ const commentModel = db.comment;
 const fs = require("fs");
 
 exports.getAllComments = async (req, res) => {
-		await commentModel
-			.findAll({
-				order: [["createdAt", "DESC"]],
-			})
-			.then((comment) => res.status(200).json(comment))
-			.catch((error) => res.status(400).json(error));
+	await commentModel
+		.findAll({
+			order: [["createdAt", "DESC"]],
+		})
+		.then((comment) => res.status(200).json(comment))
+		.catch((error) => res.status(400).json(error));
 };
 
 exports.createComment = async (req, res) => {
@@ -20,23 +20,26 @@ exports.createComment = async (req, res) => {
 		UserId: req.token.userId,
 	};
 	if (req.file) {
-		console.log('req.token.userId: ', req.token.userId);
+		console.log("req.token.userId: ", req.token.userId);
 		reqBody = {
 			...reqBody,
 			media: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
 		};
 	}
 	await commentModel
-	.create(reqBody)
-	.then(() => res.status(201).json({ message: "Commentaire créé avec succès !" }))
-	.catch((err) => {
-		res.status(500).json({
-			message: err.message,
+		.create(reqBody)
+		.then(() =>
+			res.status(201).json({ message: "Commentaire créé avec succès !" }),
+		)
+		.catch((err) => {
+			res.status(500).json({
+				message: err.message,
+			});
 		});
-	});
 };
 
 exports.updateComment = async (req, res) => {
+	console.log("req.params.id: ", req.params.id);
 	await commentModel
 		.findOne({ where: { id: req.params.id } })
 		.then((comment) => {
@@ -80,8 +83,8 @@ exports.updateComment = async (req, res) => {
 		);
 };
 
-exports.deleteComment =  (req, res) => {
-	console.log('req.params.id: ', req.params.id);
+exports.deleteComment = (req, res) => {
+	console.log("req.params.id: ", req.params.id);
 	commentModel
 		.findOne({
 			where: { id: req.params.id },
@@ -121,12 +124,10 @@ exports.adminDeleteComment = async (req, res) => {
 				const filename = comment.media.split("/images/")[1];
 				fs.unlink(`images/${filename}`, () => {});
 			}
-			commentModel
-				.destroy({ where: { id: req.params.id } })
-				.then(() => {
-					res.status(200).json({
-						message: "Commentaire supprimé avec succès !",
-					});
-				})
-		})
+			commentModel.destroy({ where: { id: req.params.id } }).then(() => {
+				res.status(200).json({
+					message: "Commentaire supprimé avec succès !",
+				});
+			});
+		});
 };

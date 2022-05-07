@@ -1,20 +1,21 @@
 // Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
 
 const db = require("../models");
-const postModel = db.post;
+const commentModel = db.post;
 
 module.exports = (req, res, next) => {
 	try {
 		commentModel
-			.findOne({
-				where: { id: req.params.id },
-			})
-			.then((comment) => {
-				if (comment.UserId === req.token.userId) {
-					next();
-				} else {
-					return res
-						.status(403)
+		.findOne({
+			where: { id: req.params.id },
+		})
+		.then((comment) => {
+			if (comment.UserId === req.token.userId) {
+				next();
+				console.log('req: ', req);
+			} else {
+				return res
+				.status(403)
 						.json({ message: "Vous n'êtes pas le propriétaire !" });
 				}
 			})
