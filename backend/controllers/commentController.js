@@ -2,7 +2,6 @@
 
 const db = require("../models");
 const commentModel = db.comment;
-console.log('commentModelcontroller: ', commentModel);
 
 const fs = require("fs");
 
@@ -39,11 +38,9 @@ exports.createComment = async (req, res) => {
 };
 
 exports.updateComment = async (req, res) => {
-	console.log("req.params.id: ", req.params.id);
 	await commentModel
 		.findOne({ where: { id: req.params.id } })
 		.then((comment) => {
-			console.log("commentModelupdate: ", commentModel);
 			let dataBody = {
 				...req.body,
 			};

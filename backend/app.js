@@ -13,9 +13,9 @@ require("dotenv").config("./.env");
 
 const helmet = require("helmet");
 
-// db.sequelize.sync({ force: false }).then(() => {
-// 	console.log("Database Groupomania synchronisée !");
-// });
+db.sequelize.sync({ force: false }).then(() => {
+	console.log("Database Groupomania synchronisée !");
+});
 
 app.use(express.json());
 

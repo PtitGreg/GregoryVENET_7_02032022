@@ -47,7 +47,6 @@ exports.signup = async (req, res) => {
 					res.status(201).json({ message: "Utilisateur créé avec succès!" }),
 				)
 				.catch((error) => {
-					console.log('error: ', error.message);
 					res.status(500).json({
 						error
 					});
@@ -129,7 +128,6 @@ exports.updateUser = async (req, res) => {
 	await userModel
 		.findOne({ where: { id: req.params.id } })
 		.then((user) => {
-			console.log('user: ', user);
 			let dataBody = {
 				...req.body,
 			};

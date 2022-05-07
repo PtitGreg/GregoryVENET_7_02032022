@@ -71,7 +71,6 @@ export const updateComment = (id, content) => {
 };
 
 export const deleteComment = (id, isAdmin) => {
-	console.log('admin: ', isAdmin);
 	return async (dispatch) => {
 		try {
 			if (isAdmin) {

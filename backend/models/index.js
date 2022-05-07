@@ -38,7 +38,6 @@ db.Sequelize = Sequelize;
 db.user = require("./userModel")(sequelize, Sequelize);
 db.post = require("./postModel")(sequelize, Sequelize);
 db.comment = require("./commentModel")(sequelize, Sequelize);
-console.log('db.commentmodel: ', db.comment);
 
 db.user.hasMany(db.post, { onDelete: "cascade" });
 db.user.hasMany(db.comment, { onDelete: "cascade" });
