@@ -1,6 +1,6 @@
 // Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addComment, getComments } from "../../actions/comment.actions";
 import { dateParser, isEmpty } from "../Utils";
@@ -8,7 +8,7 @@ import EditDeleteComment from "./EditDeleteComment";
 import { uIdContext } from "../AppContext";
 
 const CardComment = ({ post }) => {
-	const [content, setContent] = useState("");
+	const [textUpdate, setTextUpdate] = useState("");
 	const userData = useSelector((state) => state.userReducer);
 	const usersData = useSelector((state) => state.usersReducer);
 	const postData = useSelector((state) => state.postReducer);
@@ -20,10 +20,10 @@ const CardComment = ({ post }) => {
 
 	const handleComment = (e) => {
 		e.preventDefault();
-		if (content) {
-			dispatch(addComment(post.id, userData.id, content)).then(() => {
-				setContent("")
-				dispatch(getComments())
+		if (textUpdate) {
+			dispatch(addComment(post.id, userData.id, textUpdate)).then(() => {
+				setTextUpdate("");
+				dispatch(getComments());
 			});
 		} else {
 			alert("Merci de saisir du texte !");
@@ -81,8 +81,8 @@ const CardComment = ({ post }) => {
 					<input
 						type="text"
 						name="text"
-						onChange={(e) => setContent(e.target.value)}
-						value={content}
+						onChange={(e) => setTextUpdate(e.target.value)}
+						value={textUpdate}
 						placeholder="Laisser un commentaire"
 					/>
 					<br />

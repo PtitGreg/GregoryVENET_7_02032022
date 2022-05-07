@@ -197,7 +197,7 @@ exports.deleteUser = async (req, res) => {
 	const userId = req.auth;
 	await userModel
 		.findOne({
-			where: { id: userId },
+			where: { id: req.params.id },
 		})
 		.then((user) => {
 			if (

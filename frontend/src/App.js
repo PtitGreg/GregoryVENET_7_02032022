@@ -15,8 +15,7 @@ import { getComments } from "./actions/comment.actions";
 const App = () => {
 	const [myToken, setMyToken] = useState(null);
 	const [userId, setUserId] = useState(null);
-	const [ isAdmin, setIsAdmin ] = useState(false);
-	const [isLogged, setIsLogged] = useState(false);
+	const [isAdmin, setIsAdmin] = useState(false);
 	const dispatch = useDispatch();
 
 	const controlToken = () => {
@@ -38,11 +37,10 @@ const App = () => {
 			}
 		}
 	};
-
 	useEffect(controlToken);
 
 	return (
-		<uIdContext.Provider value={{userId, isAdmin, isLogged}}>
+		<uIdContext.Provider value={{ userId, isAdmin }}>
 			<BrowserRouter>
 				<Navbar />
 				<Routes>

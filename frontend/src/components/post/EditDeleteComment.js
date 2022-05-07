@@ -10,7 +10,6 @@ import deleteImg from "../../styles/assets/icons/trash.svg";
 const EditDeleteComment = ({ comment, postId }) => {
 	const [isAuthor, setIsAuthor] = useState(false);
 	const [edit, setEdit] = useState(false);
-	console.log('edit: ', edit);
 	const [content, setContent] = useState("");
 	const { userId } = useContext(uIdContext);
 	const dispatch = useDispatch();
@@ -25,19 +24,19 @@ const EditDeleteComment = ({ comment, postId }) => {
 		}
 	};
 
-	const handleDelete = (props) => {
-		console.log("props: ", props);
-		dispatch(deleteComment(comment.id, props.isAdmin));
+	const handleDelete = (isAdmin) => {
+		dispatch(deleteComment(comment.id, isAdmin));
+		window.location.reload();
 	};
 
 	useEffect(() => {
 		const checkAuthor = () => {
-			if (userId === comment.UserId) {
+			if ((userId === comment.UserId) || isAdmin) {
 				setIsAuthor(true);
 			}
 		};
 		checkAuthor();
-	}, [userId, comment.UserId]);
+	}, [userId, comment.UserId, isAdmin]);
 
 	return (
 		<div className="edit-comment">
@@ -46,7 +45,7 @@ const EditDeleteComment = ({ comment, postId }) => {
 					<img src={editCommImg} alt="edit-comment" />
 				</span>
 			)}
-			{((isAdmin && edit) || (isAuthor && edit)) && (
+			{(isAuthor && edit) && (
 				<form action="" onSubmit={handleUpdate} className="edit-comment-form">
 					{isAuthor && edit && (
 						<label htmlFor="text" onClick={() => setEdit(!edit)}>

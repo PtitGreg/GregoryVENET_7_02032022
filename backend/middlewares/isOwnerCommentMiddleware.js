@@ -1,7 +1,7 @@
 // Formation OpenClassrooms - Développeur Web - Projet 7 - Grégory VENET
 
 const db = require("../models");
-const commentModel = db.comment;
+const postModel = db.post;
 
 module.exports = (req, res, next) => {
 	try {
@@ -11,7 +11,6 @@ module.exports = (req, res, next) => {
 			})
 			.then((comment) => {
 				if (comment.UserId === req.token.userId) {
-					console.log('comment.UserId: ', comment.UserId);
 					next();
 				} else {
 					return res

@@ -81,6 +81,7 @@ exports.updateComment = async (req, res) => {
 };
 
 exports.deleteComment =  (req, res) => {
+	console.log('req.params.id: ', req.params.id);
 	commentModel
 		.findOne({
 			where: { id: req.params.id },
@@ -109,8 +110,9 @@ exports.deleteComment =  (req, res) => {
 		);
 };
 
-exports.adminDeleteComment =async (req, res) => {
-	commentModel
+exports.adminDeleteComment = async (req, res) => {
+	console.log("req.params.id: ", req.params.id);
+	await commentModel
 		.findOne({
 			where: { id: req.params.id },
 		})
@@ -126,14 +128,5 @@ exports.adminDeleteComment =async (req, res) => {
 						message: "Commentaire supprimé avec succès !",
 					});
 				})
-				.catch((error) =>
-					res.status(404).json({
-						message: "Erreur lors de la suppression dans la database !",
-						error,
-					}),
-				);
 		})
-		.catch((error) =>
-			res.status(500).json({ message: "Commentaire non trouvé !", error }),
-		);
-}
+};

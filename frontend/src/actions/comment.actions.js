@@ -70,13 +70,14 @@ export const updateComment = (id, content) => {
 	};
 };
 
-export const deleteComment = (commentId, admin) => {
+export const deleteComment = (id, isAdmin) => {
+	console.log('admin: ', isAdmin);
 	return async (dispatch) => {
 		try {
-			if (admin) {
+			if (isAdmin) {
 				await axios({
 					method: "DELETE",
-					url: `${process.env.REACT_APP_BACKEND_URL}comment/admin/${commentId}`,
+					url: `${process.env.REACT_APP_BACKEND_URL}comment/admin/${id}`,
 					headers: {
 						authorization: `Bearer ${localStorage.getItem("Token")}`,
 					},
@@ -84,13 +85,13 @@ export const deleteComment = (commentId, admin) => {
 			} else {
 				await axios({
 					method: "DELETE",
-					url: `${process.env.REACT_APP_BACKEND_URL}comment/${commentId}`,
+					url: `${process.env.REACT_APP_BACKEND_URL}comment/${id}`,
 					headers: {
 						authorization: `Bearer ${localStorage.getItem("Token")}`,
 					},
 				});
 			}
-			dispatch({ type: DELETE_COMMENT, payload: { commentId  } });
+			dispatch({ type: DELETE_COMMENT, payload: { id  } });
 		} catch (err) {
 			if (err.response) {
 				alert("Erreur lors de la suppression", err.response.data);
