@@ -1,6 +1,6 @@
 # Projet 7 de la formation Dev web Openclassrooms
 
-Projet en cours de développement
+Projet terminé et validé
 
 ## Lancement du projet
 
