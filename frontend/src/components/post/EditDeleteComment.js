@@ -6,7 +6,7 @@ import { uIdContext } from "../AppContext";
 import { updateComment, deleteComment } from "../../actions/comment.actions";
 import editCommImg from "../../styles/assets/icons/edit.svg";
 import deleteImg from "../../styles/assets/icons/trash.svg";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const EditDeleteComment = ({ comment }) => {
 	const [isAuthor, setIsAuthor] = useState(false);
@@ -15,7 +15,7 @@ const EditDeleteComment = ({ comment }) => {
 	const { userId } = useContext(uIdContext);
 	const dispatch = useDispatch();
 	const { isAdmin } = useContext(uIdContext);
-	let navigate = useNavigate();
+	// let navigate = useNavigate();
 
 	const handleUpdate = (e) => {
 		e.preventDefault();
