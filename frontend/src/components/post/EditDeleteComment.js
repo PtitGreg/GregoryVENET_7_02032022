@@ -34,7 +34,7 @@ const EditDeleteComment = ({ comment }) => {
 
 	useEffect(() => {
 		const checkAuthor = () => {
-			if ((userId === comment.UserId) || isAdmin) {
+			if (userId === comment.UserId || isAdmin) {
 				setIsAuthor(true);
 			}
 		};
@@ -48,20 +48,22 @@ const EditDeleteComment = ({ comment }) => {
 					<img src={editCommImg} alt="edit-comment" />
 				</span>
 			)}
-			{(isAuthor && edit) && (
+			{isAuthor && edit && (
 				<form action="" onSubmit={handleUpdate} className="edit-comment-form">
-					{isAuthor && edit && (
+					{!isAdmin && isAuthor && edit && (
 						<label htmlFor="text" onClick={() => setEdit(!edit)}>
 							Editer
 						</label>
 					)}
 					<br />
-					<input
-						type="text"
-						name="text"
-						onChange={(e) => setContent(e.target.value)}
-						defaultValue={comment.content}
-					/>
+					{!isAdmin && isAuthor && (
+						<input
+							type="text"
+							name="text"
+							onChange={(e) => setContent(e.target.value)}
+							defaultValue={comment.content}
+						/>
+					)}
 					<br />
 					<div className="btn">
 						<span
@@ -72,7 +74,7 @@ const EditDeleteComment = ({ comment }) => {
 							}}>
 							<img src={deleteImg} alt="icone_delete" />
 						</span>
-						<input type="submit" value="Valider modification" />
+						{!isAdmin && <input type="submit" value="Valider modification" />}
 					</div>
 				</form>
 			)}
