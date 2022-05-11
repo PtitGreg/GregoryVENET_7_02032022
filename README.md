@@ -210,3 +210,62 @@ projet.
 - Personnaliser le contenu envoyé à un client web
 - Gérer un stockage de données à l'aide de SQL
 - Implémenter un stockage de données sécurisé en utilisant SQL
+
+## Résultat de la soutenance
+
+
+1. Authentifier un utilisateur et maintenir sa session
+
+Validé
+
+Commentaires :
+
+un token d'authentification de delai de 8h garde la session de l'utilisateur active
+
+2. Gérer un stockage de données à l'aide de SQL
+
+Validé
+
+Commentaires :
+
+ l’utilisateur peut faire une requête des données depuis SQL.
+
+ l’utilisateur peut soumettre des changements à la base de données SQL.
+
+3. Implémenter un stockage de données sécurisé en utilisant SQL
+
+Validé
+
+Commentaires :
+
+la base de données stocke les informations de connexion des utilisateurs de manière sécurisée.
+
+4. Personnaliser le contenu envoyé à un client web
+
+Validé
+
+Commentaires :
+
+ l’application web contient les logos fournis par le client
+
+ l’application web respecte la gamme de couleur demandée par le client
+
+ la page est conforme aux normes WCAG.
+
+Livrable
+
+Points forts :
+
+un projet qui répond parfaitement au cahier de charges
+
+Le design respecte une charte graphique inspirée du logo
+
+Axes d'amélioration :
+
+Soutenance
+
+Remarques :
+
+Le projet a été bien présenté, grace à des slides organisés et pertinents. Les choix sont bien justifiés.
+
+Projet validé!
